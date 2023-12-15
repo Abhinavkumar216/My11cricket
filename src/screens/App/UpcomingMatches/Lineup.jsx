@@ -17,35 +17,59 @@ const Lineup = () => {
   } = useRoute();
   // console.log('=>',params);
   return (
-    <SafeAreaView className="flex-1">
-      <ImageBackground
-        source={require('../../../../assets/images/ground.jpg')}
-        className=" flex-1 h-full w-full">
+    <ImageBackground
+      source={require('../../../../assets/images/ground.jpg')}
+      className="flex-1 justify-evenly ">
+      <View className="justify-center items-center">
+        <Text className="font-WorksansMedium text-xs text-white mb-3">
+          WICKET-KEEPERS
+        </Text>
         <FlatList
-          data={data}
-          numColumns={3}
-          contentContainerStyle={{
-            flex: 1,
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-around',
-            alignItems: 'center',
-            // alignContent:'space-around'
-          }}
+          horizontal
+          data={data.filter(team => team?.role === 'WK-Batsman')}
           renderItem={({item}) => <PlayerCard item={item} />}
         />
-      </ImageBackground>
-    </SafeAreaView>
+      </View>
+      <View className="justify-center items-center">
+        <Text className="font-WorksansMedium text-xs text-white mb-3">BATTERS</Text>
+        <FlatList
+          horizontal
+          data={data.filter(team => team?.role === 'Batsman')}
+          renderItem={({item}) => <PlayerCard item={item} />}
+        />
+      </View>
+      <View className="justify-center items-center">
+        <Text className="font-WorksansMedium text-xs text-white mb-3">
+          ALL-ROUNDERS
+        </Text>
+
+        <FlatList
+          horizontal
+          data={data.filter(team => team?.role.includes('Allrounder'))}
+          renderItem={({item}) => <PlayerCard item={item} />}
+        />
+      </View>
+      <View className="justify-center items-center">
+        <Text className="font-WorksansMedium text-xs text-white mb-3">BOWLERS</Text>
+
+        <FlatList
+          horizontal
+          data={data.filter(team => team?.role === 'Bowler')}
+          renderItem={({item}) => <PlayerCard item={item} />}
+        />
+      </View>
+    </ImageBackground>
   );
 };
 
 export default Lineup;
 
 const PlayerCard = ({item}) => {
-  console.log('item =>', item);
+  const nameSlice = item.name.split(' ');
+
+  const ShortName = nameSlice[0].charAt(0).concat(' ', nameSlice[1]);
   return (
-    <View className=" w-24 m-5">
-      
+    <View className="m-3 items-center overflow-visible">
       {item.isCaptain && (
         <View className="absolute z-10 p-1 w-7 h-7 items-center justify-center rounded-full -left-2 -top-2  bg-white">
           <Text className="font-WorksansMedium text-sm text-black">C</Text>
@@ -60,19 +84,18 @@ const PlayerCard = ({item}) => {
         source={{
           uri: `http://i.cricketcb.com/stats/img/faceImages/${item.playerId}.jpg`,
         }}
-        className=" h-24 w-24 rounded-t-md"
+        className=" h-16 w-16 rounded-t-md"
         resizeMode="contain"
       />
       <Text
         ellipsizeMode="tail"
         numberOfLines={1}
-        className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm">
-        {item.name}
+        className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm w-16 ">
+        {ShortName}
       </Text>
-      <Text
-        className="bg-neutral-300 text-center font-WorksansMedium text-xs text-black p-1 rounded-sm">
+      {/* <Text className="bg-black text-center font-WorksansMedium text-xs text-white p-1 rounded-sm">
         {item.role}
-      </Text>
+      </Text> */}
     </View>
   );
 };

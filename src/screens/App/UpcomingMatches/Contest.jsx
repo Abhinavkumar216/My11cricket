@@ -91,8 +91,8 @@ const ContestCard = ({item, navigation}) => {
   return (
     <View className="border mx-3  rounded-xl bg-white my-1 border-gray-400">
       <View className="flex-row justify-between px-3 pt-3">
-        <Text className="font-WorksansRegular">Prize Pool</Text>
-        <Text className="font-WorksansRegular">Entry</Text>
+        <Text className="font-WorksansRegular text-black">Prize Pool</Text>
+        <Text className="font-WorksansRegular text-black">Entry</Text>
       </View>
 
       <View className="flex-row justify-between my-2 items-center px-3">

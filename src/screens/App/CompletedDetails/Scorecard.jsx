@@ -161,7 +161,7 @@ const TopScoreOne = ({data, expanded, setExpanded}) => {
         </Text>
         <View className="flex-row items-center">
           <Text className="font-WorksansSemiBold text-xl px-3 text-black">
-            <Text className="font-WorksansRegular text-sm">
+            <Text className="font-WorksansRegular text-sm text-black">
               ({data?.scoreDetails?.overs})
             </Text>{' '}
             {data?.scoreDetails?.runs}/{data?.scoreDetails?.wickets}
@@ -193,7 +193,7 @@ const TopScoreTwo = ({data, expanded, setExpanded}) => {
         </Text>
         <View className="flex-row items-center">
           <Text className="font-WorksansSemiBold text-xl px-3 text-black">
-            <Text className="font-WorksansRegular text-sm">
+            <Text className="font-WorksansRegular text-sm text-black">
               ({data?.scoreDetails?.overs})
             </Text>{' '}
             {data?.scoreDetails?.runs}/{data?.scoreDetails?.wickets}

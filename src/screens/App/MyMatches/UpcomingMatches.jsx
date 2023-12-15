@@ -1,5 +1,13 @@
 import React from 'react';
-import {Dimensions, FlatList, Image, Pressable, Text, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  Pressable,
+  Text,
+  View,
+  RefreshControl,
+} from 'react-native';
 import {useMymatchesQuery} from '../../../Services/API/HomeAPI';
 import Loading from '../../../components/Loading';
 import ErrorState from '../../../components/ErrorState';
@@ -7,8 +15,18 @@ import EmptyState from '../../../components/EmptyState';
 import moment from 'moment';
 
 const UpcomingMatches = ({navigation}) => {
-  const {isError, error, isLoading, isSuccess, data} =
+  const {isError, error, isLoading, isSuccess, data, refetch,currentData} =
     useMymatchesQuery('Upcoming');
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    refetch();
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -22,6 +40,12 @@ const UpcomingMatches = ({navigation}) => {
       <View>
         <FlatList
           data={data}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => onRefresh()}
+            />
+          }
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom: 20}}
           ListEmptyComponent={

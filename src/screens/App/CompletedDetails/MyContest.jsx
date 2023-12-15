@@ -52,9 +52,9 @@ const SpotCard = ({item}) => {
         </Text>
       </View>
       <View className="px-3 py-2 flex-row justify-between bg-gray-100">
-        <Text className="font-WorksansRegular text-sm">Glory awaits! </Text>
-        <Text className="font-WorksansRegular text-sm ml-5">Single!</Text>
-        <Text className="font-WorksansRegular text-sm flex-1 text-right">
+        <Text className="font-WorksansRegular text-sm text-black">Glory awaits! </Text>
+        <Text className="font-WorksansRegular text-sm ml-5 text-black">Single!</Text>
+        <Text className="font-WorksansRegular text-sm flex-1 text-right text-black">
         Flexible!
         </Text>
       </View>
@@ -62,7 +62,7 @@ const SpotCard = ({item}) => {
         <Text className="font-WorksansRegular text-base text-black">
           {item.team.userUid}
         </Text>
-        <Text className="font-WorksansRegular text-base">
+        <Text className="font-WorksansRegular text-base text-black">
           {' '}
           {item.winnerPercentage}%
         </Text>

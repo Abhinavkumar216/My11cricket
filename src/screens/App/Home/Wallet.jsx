@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, Pressable, FlatList} from 'react-native';
 import ButtonFull from '../../../components/ButtonFull';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,11 +9,12 @@ import {useGetWalletQuery} from '../../../Services/API/UserAPI';
 import Loading from '../../../components/Loading';
 import ErrorState from '../../../components/ErrorState';
 import EmptyState from '../../../components/EmptyState';
+import uuid from 'react-native-uuid';
 
 const Wallet = ({navigation}) => {
-  const {isError, isSuccess, isLoading, data, error} = useGetWalletQuery();
+  const [page, setPage] = useState(1);
+  const {isError, isSuccess, isLoading, data, error} = useGetWalletQuery(page);
   const user = useSelector(userstate);
-  const [page, setPage] = useState(1)
 
   if (isLoading) {
     return <Loading />;
@@ -27,7 +28,9 @@ const Wallet = ({navigation}) => {
       <SafeAreaView className="flex-1 bg-neutral-100 ">
         <Header navigation={navigation} />
         <View className="items-center py-10">
-          <Text className="font-WorksansRegular">current Balance</Text>
+          <Text className="font-WorksansRegular text-black text-lg">
+            current Balance
+          </Text>
           <Text className="font-WorksansSemiBold text-4xl text-black ">
             {user?.coins}
           </Text>
@@ -41,7 +44,7 @@ const Wallet = ({navigation}) => {
         <FlatList
           data={data}
           ListEmptyComponent={
-            <EmptyState title={"No Wallet Transaction Available"}/>
+            <EmptyState title={'No Wallet Transaction Available'} />
           }
           onEndReachedThreshold={0.5}
           onEndReached={({distanceFromEnd}) => {

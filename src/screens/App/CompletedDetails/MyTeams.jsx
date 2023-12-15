@@ -1,4 +1,4 @@
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {
   FlatList,
@@ -18,9 +18,7 @@ const MyTeams = () => {
     params:{matchId},
   } = useRoute();
 
-  // const {isError,isLoading,} = useMyTeamsQuery(MatchId)
-
-  // console.log('+++> ',params)
+  const navigation = useNavigation()
 
   const {isError, error, isLoading, isSuccess, data} = useMyTeamsQuery(matchId);
 
@@ -40,7 +38,7 @@ const MyTeams = () => {
             />
           }
           showsVerticalScrollIndicator={false}
-          renderItem={({item}) => <TeamCard item={item} />}
+          renderItem={({item}) => <TeamCard item={item} navigation={navigation} />}
         />
       </View>
     );
@@ -53,9 +51,9 @@ const MyTeams = () => {
 
 export default MyTeams;
 
-const TeamCard = ({item, Purpose, onTeamSelect}) => {
+const TeamCard = ({item,navigation}) => {
   return (
-    <Pressable>
+    <Pressable onPress={()=> navigation.navigate('Lineup', {data: item.team})}>
       <ImageBackground
         source={require('../../../../assets/images/playground.jpg')}
         imageStyle={{borderRadius: 12}}

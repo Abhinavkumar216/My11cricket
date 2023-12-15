@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, {createContext, useEffect, useState, useMemo} from 'react';
 import {MMKV} from 'react-native-mmkv';
 import {BASE_URL} from '../../CONSTANTS';
+import uuid from 'react-native-uuid';
 import {isValidMobile, showToast} from './Functions/AuthFunction';
 
 export const AuthContext = createContext();
@@ -88,7 +89,7 @@ export const AuthProvider = ({children}) => {
           name: name,
           otp: Number(otp),
           notificationToken: 'process.env.NOTIFICATION_TOKEN1',
-          deviceId: 'process.env.DEVICE_ID1',
+          deviceId: uuid.v4(),
         },
         {
           headers,
@@ -147,7 +148,6 @@ export const AuthProvider = ({children}) => {
     } catch (error) {
       // console.error('Error in login', error.response.config);
       showToast({
-        
         type: 'error',
         heading: error.response.data.statusCode.toString(),
         subheading: error.response.data.message,
@@ -217,7 +217,7 @@ export const AuthProvider = ({children}) => {
           subheading: 'Logout Successfully',
         });
         setUserToken(null);
-        storage.delete("AUTH_TOKEN")
+        storage.delete('AUTH_TOKEN');
         setIsLoading(false);
       } else {
         console.log('Cannot log out');

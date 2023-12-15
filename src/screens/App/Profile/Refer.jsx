@@ -34,7 +34,7 @@ const Refer = () => {
         source={require('../../../../assets/images/error/refer.png')}
         className="w-64 h-52 self-center mb-10"
       />
-      <Text className="font-WorksansRegular text-base mb-2 -ml-5">
+      <Text className="font-WorksansRegular text-base mb-2 -ml-5 text-black">
         Your Referal Code
       </Text>
       <View className="flex-row items-center ">

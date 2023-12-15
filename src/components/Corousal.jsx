@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, {useRef, useState} from 'react';
 import {
   Dimensions,
@@ -13,6 +14,7 @@ const {width} = Dimensions.get('screen');
 
 const Corousal = ({Data}) => {
   const flatlistRef = useRef();
+  const navigation = useNavigation()
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const onViewRef = useRef(({changed}) => {
@@ -38,7 +40,7 @@ const Corousal = ({Data}) => {
         viewabilityConfig={{viewAreaCoveragePercentThreshold: 95}}
         onViewableItemsChanged={onViewRef.current}
         showsHorizontalScrollIndicator={false}
-        renderItem={({item}) => <ImageItem item={item} />}
+        renderItem={({item}) => <ImageItem item={item} navigation={navigation} />}
       />
       <View className="flex-row flex-1 ">
         {Data.map(({}, ind) => {
@@ -60,11 +62,14 @@ const Corousal = ({Data}) => {
 
 export default Corousal;
 
-const ImageItem = ({item}) => {
+const ImageItem = ({item,navigation}) => {
   const onCorousalPress = () => {
     switch (item?.type) {
       case 'ADDVERTISMENT':
         Linking.openURL(item?.addUrl);
+        break;
+      case 'MATCH':
+        navigation.navigate('Refer')
         break;
 
       default:
@@ -82,7 +87,6 @@ const ImageItem = ({item}) => {
         source={{uri: item?.imageLink}}
         className="h-24 rounded-lg"
         style={{width: 'auto', marginHorizontal: 10}}
-        resizeMode="cover"
       />
     </Pressable>
   );
