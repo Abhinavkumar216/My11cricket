@@ -45,7 +45,7 @@ const Home = () => {
   }
   if (isSuccess) {
     return (
-      <SafeAreaView className="flex-1 ">
+      <SafeAreaView className="flex-1 bg-neutral-50">
         <StatusBar animated backgroundColor={'#000'} translucent />
         <HomeHeader />
         <FlatList
@@ -62,8 +62,8 @@ const Home = () => {
               {/* Corousal */}
               <Corousal Data={data?.carousalItems} />
               {/* Upcoming Matches */}
-              <View className=" mt-4  justify-between">
-                <Text className="font-WorksansSemiBold text-xl text-black ml-3">
+              <View className="  justify-between">
+                <Text className="font-WorksansMedium text-xl text-black ml-3">
                   Upcoming Matches
                 </Text>
               </View>

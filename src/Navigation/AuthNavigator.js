@@ -18,7 +18,9 @@ const AuthNavigator = () => {
           fontFamily: 'WorkSans-Medium',
           fontSize:18,
         },
-        animation: 'simple_push',
+        animation: 'slide_from_right',
+        animationDuration:500,
+        animationTypeForReplace:'push'
       }}>
       <Stack.Screen
         name="GetStarted"

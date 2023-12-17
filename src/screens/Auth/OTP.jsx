@@ -4,6 +4,7 @@ import OtpInputs from 'react-native-otp-inputs';
 import ButtonFull from '../../components/ButtonFull';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {AuthContext} from '../../Services/AuthContext';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 const OTP = () => {
   const navigation = useNavigation();
@@ -30,9 +31,9 @@ const OTP = () => {
 
   return (
     <View className="flex-1">
-      <View className="mt-10">
-        <Text className="font-WorksansRegular text-base mx-3 text-black">
-          Enter OTP Sent to mobile +91 {routes.params?.mobile}
+      <Animated.View  entering={FadeInDown.delay(200).duration(1000)} className="mt-10">
+        <Text className="font-WorksansRegular text-lg mx-5 mb-3 text-black">
+         {` Enter OTP Sent to mobile\n +91 ${routes.params?.mobile}`}
         </Text>
         <OtpInputs
           clearTextOnFocus
@@ -40,8 +41,6 @@ const OTP = () => {
           keyboardType="phone-pad"
           numberOfInputs={6}
           selectionColor={'#aaa'}
-          // editable={}
-          
           dataDetectorTypes={'phoneNumber'}
           className="flex-row font-WorksansSemiBold text-lg items-center justify-center text-center "
           selectTextOnFocus={false}
@@ -49,13 +48,14 @@ const OTP = () => {
           inputContainerStyles={{
             alignItems: 'center',
             paddingHorizontal: 12,
-            margin: 7,
+            margin: 4,
             backgroundColor: '#ddd',
+            borderRadius:5
           }}
           autoFocus
           inputStyles={{fontSize: 26, textAlign: 'center', color: '#000'}}
         />
-      </View>
+      </Animated.View>
       {/* <Text className="font-WorksansRegular text-base mx-3 text-black">
         Didn't recieve the OTP? Request for a new one in
         <Text className="text-red-500 font-WorksansSemiBold"> 18 Seconds.</Text>

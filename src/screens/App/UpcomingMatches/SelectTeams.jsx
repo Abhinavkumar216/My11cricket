@@ -20,6 +20,7 @@ import ButtonFull from '../../../components/ButtonFull';
 import ErrorState from '../../../components/ErrorState';
 import Loading from '../../../components/Loading';
 import {showToast} from '../../../Services/Functions/AuthFunction';
+import Animated, {FadeInDown, FadeInRight} from 'react-native-reanimated';
 
 const SelectTeams = () => {
   const {
@@ -105,13 +106,14 @@ const SelectTeams = () => {
         />
         <SectionList
           sections={data}
-          renderItem={({item}) => {
+          renderItem={({item, index}) => {
             return (
               <PlayersItem
                 item={item}
                 setmyTeams={setmyTeams}
                 myTeams={myTeams}
                 key={item._id}
+                index={index}
                 navigation={navigation}
               />
             );
@@ -143,15 +145,15 @@ export default SelectTeams;
 
 const SectionHeader = ({section}) => {
   return (
-    <View className="bg-white p-3 flex-row">
-      <Text className="font-WorksansSemiBold text-xl text-black flex-1">
+    <View className="bg-orange-400 p-3 flex-row">
+      <Text className="font-WorksansMedium text-lg text-white flex-1">
         {section.title}
       </Text>
     </View>
   );
 };
 
-const PlayersItem = ({item, setmyTeams, myTeams}) => {
+const PlayersItem = ({item, setmyTeams, myTeams, index}) => {
   const chooseCaptain = id => {
     if (myTeams.length === 0) {
       console.warn('Please select players first');
@@ -236,28 +238,44 @@ const PlayersItem = ({item, setmyTeams, myTeams}) => {
 
   const handleSelection = useCallback(
     item => {
-      if (myTeams?.length >= 11) {
-        // console.warn('Maximum of 11 players from one team');
-        showToast({
-          type: 'info',
-          heading: 'Player Exceed',
-          subheading: 'Maximum of 11 players from one team',
-        });
-        return;
-      }
-      if (myTeams?.length < 0) {
-        setmyTeams(item);
-      } else if (myTeams?.filter(team => team?._id === item._id)?.length > 0) {
-        let removeItem = myTeams?.filter(team => team?._id !== item._id);
-        setmyTeams(removeItem);
+      const existingTeamIndex = myTeams.findIndex(
+        team => team._id === item._id,
+      );
+
+      if (existingTeamIndex !== -1) {
+        // Player already selected, remove from the team
+        const updatedTeams = [...myTeams];
+        updatedTeams.splice(existingTeamIndex, 1);
+        setmyTeams(updatedTeams);
       } else {
+        if (myTeams.length >= 11) {
+          showToast({
+            type: 'info',
+            heading: 'Player Exceed',
+            subheading: 'Maximum of 11 players from one team',
+          });
+          return;
+        }
+
+        const role = item.role;
+
+        if (myTeams.filter(team => team.role === role).length >= 4) {
+          showToast({
+            type: 'info',
+            heading: 'Role Limit Exceeded',
+            subheading:
+              'You cannot select more than 4 players with the same role',
+          });
+          return;
+        }
+
         setmyTeams(prev => [
           ...prev,
           {
             _id: item._id,
             playerId: item.id,
             name: item.name,
-            role: item.role,
+            role: role,
             team: item.team,
             isCaptain: false,
             isViceCaptain: false,
@@ -265,33 +283,37 @@ const PlayersItem = ({item, setmyTeams, myTeams}) => {
         ]);
       }
     },
-    [item, myTeams],
+    [myTeams],
   );
 
   return (
-    <View className="flex-row justify-between items-center border-b border-neutral-200">
+    <Animated.View
+      entering={FadeInRight.delay(index * 200).duration(1000)}
+      className="flex-row justify-between items-center border-b border-zinc-200">
       <View className=" flex-row flex-1">
         <Pressable
         // onPress={() => navigation.push('PlayerProfile', {item: item})}
         >
           <Image source={{uri: item?.image}} className="w-20 h-20" />
-          <Text className="bg-black text-white absolute bottom-0 px-1 font-WorksansRegular">
+          <Text className="bg-black text-xs text-white absolute bottom-0 px-1 font-WorksansRegular">
             {item?.team}
           </Text>
         </Pressable>
         <View className="ml-3 justify-center">
-          <Text className="font-WorksansMedium text-lg text-black">
+          <Text className="font-WorksansMedium text-sm text-black">
             {item.name.slice(0, 15)}
           </Text>
-          <Text className="font-WorksansRegular text-sm text-gray-500">
+          <Text className="font-WorksansRegular text-xs text-gray-500">
             {item.role}
           </Text>
         </View>
       </View>
       <View className="flex-row ">
         <Pressable
-          disabled={myTeams[myTeams.findIndex(obj => obj._id == item._id)]?.isViceCaptain ==
-            true}
+          disabled={
+            myTeams[myTeams.findIndex(obj => obj._id == item._id)]
+              ?.isViceCaptain == true
+          }
           onPress={() => chooseCaptain(item._id)}
           className=" items-center justify-center">
           <MyCaptain item={item} myTeams={myTeams} />
@@ -300,7 +322,10 @@ const PlayersItem = ({item, setmyTeams, myTeams}) => {
         <View className="w-2" />
 
         <Pressable
-        disabled={myTeams[myTeams.findIndex(obj => obj._id == item._id)]?.isCaptain == true}
+          disabled={
+            myTeams[myTeams.findIndex(obj => obj._id == item._id)]?.isCaptain ==
+            true
+          }
           onPress={() => chooseViceCaptain(item._id)}
           className=" items-center justify-center">
           <MyViceCaptain item={item} myTeams={myTeams} />
@@ -313,7 +338,7 @@ const PlayersItem = ({item, setmyTeams, myTeams}) => {
           <Icon name="add-circle-outline" size={26} color={'black'} />
         )}
       </Pressable>
-    </View>
+    </Animated.View>
   );
 };
 

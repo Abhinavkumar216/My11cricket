@@ -15,16 +15,17 @@ const ButtonFull = ({
   disabled,
   isLoading,
 }) => {
+  const bgcolor = disabled ? 'bg-green-200' : 'bg-green-500';
   return (
     <TouchableOpacity
-      className={`bg-green-600 w-11/12 self-center ${buttonStyle}`}
+      className={`${bgcolor} w-11/12 self-center ${buttonStyle}`}
       disabled={disabled}
       onPress={onPress}>
       {isLoading ? (
-        <ActivityIndicator size={'small'} color={'#fff'} className='py-3 ' />
+        <ActivityIndicator size={'small'} color={'#fff'} className="py-3 " />
       ) : (
         <Text
-          className={`py-3 text-center text-base text-gray-950 font-WorksansMedium ${textStyle}`}>
+          className={`py-3 text-center text-base text-gray-900 font-WorksansMedium ${textStyle}`}>
           {title}
         </Text>
       )}

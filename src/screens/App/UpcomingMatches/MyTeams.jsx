@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import {FAB} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import {
   useJoinPoolMutation,
   useUpcomingMyTeamsQuery,
@@ -23,6 +25,7 @@ import Loading from '../../../components/Loading';
 import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import ButtonFull from '../../../components/ButtonFull';
+import Animated, {FadeInRight} from 'react-native-reanimated';
 
 const MyTeams = () => {
   const navigation = useNavigation();
@@ -104,8 +107,6 @@ const MyTeams = () => {
     }
   };
 
-
-
   if (isLoading) {
     return <Loading />;
   }
@@ -128,9 +129,10 @@ const MyTeams = () => {
               />
             }
             showsVerticalScrollIndicator={false}
-            renderItem={({item}) => (
+            renderItem={({item, index}) => (
               <TeamCard
                 item={item}
+                index={index}
                 purpose={purpose}
                 navigation={navigation}
                 handlePresentModalPress={handlePresentModalPress}
@@ -189,31 +191,57 @@ const MyTeams = () => {
 
 export default MyTeams;
 
-const TeamCard = ({item, handlePresentModalPress, purpose,navigation}) => {
+const TeamCard = ({
+  item,
+  handlePresentModalPress,
+  purpose,
+  navigation,
+  index,
+}) => {
   // const purpose = useSelector(purposeState);
-  const onTeamCardClick = (item) => {
+  const onTeamCardClick = item => {
     if (purpose) {
       return handlePresentModalPress(item);
     } else {
       return navigation.navigate('Lineup', {data: item.team});
     }
   };
-
   return (
-    <Pressable onPress={() => onTeamCardClick(item)}>
-      <ImageBackground
-        source={require('../../../../assets/images/playground.jpg')}
-        imageStyle={{borderRadius: 12}}
-        className="w-full h-40 justify-end rounded-xl mb-3">
-        <Captain item={item} />
-        <View className=" p-1 flex-row justify-around py-1">
-          <Stats Key={'WK'} Value={item?.teamStats.wicketBatterCount} />
-          <Stats Key={'BAT'} Value={item?.teamStats.BatsmanCount} />
-          <Stats Key={'AR'} Value={item?.teamStats.AllRounderCount} />
-          <Stats Key={'BOL'} Value={item?.teamStats.BowlerCount} />
-        </View>
-      </ImageBackground>
-    </Pressable>
+    <Animated.View entering={FadeInRight.delay(index * 200).duration(1000)}>
+      <Pressable onPress={() => onTeamCardClick(item)}>
+        <ImageBackground
+          source={require('../../../../assets/images/playground.jpg')}
+          imageStyle={{borderRadius: 12}}
+          className="w-full h-40 justify-end rounded-xl mb-3">
+          <View
+            style={{backgroundColor: 'rgba(0,0,0,0.4)'}}
+            className="flex-row justify-between px-5 rounded-t-xl absolute top-0 w-full py-2">
+            <Text className="font-WorksansMedium text-base text-white">
+              {item.userUid}
+            </Text>
+            <View className='flex-row'>
+
+            <Pressable className="px-3">
+              <Icon name="create-outline" size={21} color={'white'} />
+            </Pressable>
+            <Pressable className=" px-3">
+              <Icon name="trash-outline" size={21} color={'red'} />
+            </Pressable>
+            </View>
+
+          </View>
+          <Captain item={item} />
+          <View
+            // style={{backgroundColor: 'rgba(0,0,0,0.4)'}}
+            className=" p-1 flex-row justify-around rounded-b-xl">
+            <Stats Key={'WK'} Value={item?.teamStats.wicketBatterCount} />
+            <Stats Key={'BAT'} Value={item?.teamStats.BatsmanCount} />
+            <Stats Key={'AR'} Value={item?.teamStats.AllRounderCount} />
+            <Stats Key={'BOL'} Value={item?.teamStats.BowlerCount} />
+          </View>
+        </ImageBackground>
+      </Pressable>
+    </Animated.View>
   );
 };
 
@@ -231,13 +259,14 @@ const Stats = ({Key, Value}) => {
 const Captain = ({item}) => {
   return (
     <View className="flex-row justify-around items-center">
-      <View className="w-20">
-        <View className="absolute z-10 p-1  w-7 h-7 items-center justify-center rounded-full -left-5 -top-5 border bg-white">
+      <View className="w-14">
+        <View className="absolute z-10 p-1  w-7 h-7 items-center justify-center rounded-full -left-2 -top-2 bg-white">
           <Text className="font-WorksansMedium text-sm text-black">C</Text>
         </View>
         <Image
           source={{uri: item?.teamStats.captain.image}}
-          className=" h-20 rounded-t-md"
+          className=" h-14 rounded-t-md"
+          resizeMode="contain"
         />
         <Text
           ellipsizeMode="tail"
@@ -246,13 +275,14 @@ const Captain = ({item}) => {
           {item?.teamStats.captain.name}
         </Text>
       </View>
-      <View className="w-20">
-        <View className="absolute z-10 p-1  items-center justify-center rounded-full -left-5 -top-5 border bg-white">
+      <View className="w-14">
+        <View className="absolute z-10 p-1  items-center justify-center rounded-full -left-2 -top-2 bg-white">
           <Text className="font-WorksansMedium text-sm text-black">VC</Text>
         </View>
         <Image
           source={{uri: item?.teamStats.viceCaptain.image}}
-          className="h-20 rounded-t-md"
+          className="h-14 rounded-t-md"
+          resizeMode="contain"
         />
         <Text
           ellipsizeMode="tail"

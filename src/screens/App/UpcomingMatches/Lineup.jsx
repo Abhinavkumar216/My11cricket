@@ -84,13 +84,13 @@ const PlayerCard = ({item}) => {
         source={{
           uri: `http://i.cricketcb.com/stats/img/faceImages/${item.playerId}.jpg`,
         }}
-        className=" h-16 w-16 rounded-t-md"
+        className=" h-12 w-12 rounded-t-md rounded-full"
         resizeMode="contain"
       />
       <Text
         ellipsizeMode="tail"
         numberOfLines={1}
-        className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm w-16 ">
+        className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm w-14 ">
         {ShortName}
       </Text>
       {/* <Text className="bg-black text-center font-WorksansMedium text-xs text-white p-1 rounded-sm">

@@ -87,24 +87,24 @@ const Card = ({navigation, item}) => {
     <Pressable
       onPress={() => navigation.navigate('Details', {item})}
       className="flex-1 "
-      style={{width: width}}>
-      <View className="border rounded-xl border-gray-300 mt-3 bg-white">
+      style={{width: width-24}}>
+      <View className="border rounded-xl border-zinc-200 mt-3 bg-white">
         {/* <View className="bg-gray-200 rounded-t-xl p-1 px-2 py-2">
           <Text className="text-black font-WorksansRegular">
             {item.match.seriesName}
           </Text>
         </View> */}
-        <View className="flex-row px-3 pt-3">
+        <View className="flex-row px-3 py-2">
           <Competitor1 team={item?.match?.team1} />
           <Status matchStatus={item.matchStatus} time={item.match.startDate} />
           <Competitor2 team={item?.match?.team2} />
         </View>
-        <View className="border-t my-2  border-gray-200" />
-        <View className="flex-row px-3 pb-3">
+        {/* <View className="border-t my-2  border-gray-200" /> */}
+        {/* <View className="flex-row px-3 pb-3">
           <Text className="font-WorksansRegular text-gray-600">
             {item.totalTeams} Team {item.totalContestsJoined} Contest
           </Text>
-        </View>
+        </View> */}
       </View>
     </Pressable>
   );

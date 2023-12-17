@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Text } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Text} from 'react-native';
 
 const CountdownTimer = ({remaining}) => {
   const [counter, setCounter] = useState(0);
@@ -31,11 +31,12 @@ const CountdownTimer = ({remaining}) => {
     sec < 1 ? (sec = '00') : void 0;
     min.toString().length === 1 ? (min = '0' + min) : void 0;
     sec.toString().length === 1 ? (sec = '0' + sec) : void 0;
-    return hours + 'h ' + min + 'm ' + sec +'s';
+
+    return hours + 'h ' + min + 'm ';
   }
 
   return (
-    <Text className="text-sm font-WorksansMedium text-red-600 ml-2 bg-red-100 px-3 py-1 rounded-md">
+    <Text className="text-xs font-WorksansMedium text-red-600 ml-2 bg-red-50 px-3 py-1 rounded-md">
       {isExpired ? 'Expired' : msToTime(counter)}
     </Text>
   );

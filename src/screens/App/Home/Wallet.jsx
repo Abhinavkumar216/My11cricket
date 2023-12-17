@@ -10,6 +10,7 @@ import Loading from '../../../components/Loading';
 import ErrorState from '../../../components/ErrorState';
 import EmptyState from '../../../components/EmptyState';
 import uuid from 'react-native-uuid';
+import Animated, {FadeInRight} from 'react-native-reanimated';
 
 const Wallet = ({navigation}) => {
   const [page, setPage] = useState(1);
@@ -25,18 +26,18 @@ const Wallet = ({navigation}) => {
 
   if (isSuccess) {
     return (
-      <SafeAreaView className="flex-1 bg-neutral-100 ">
+      <SafeAreaView className="flex-1">
         <Header navigation={navigation} />
-        <View className="items-center py-10">
-          <Text className="font-WorksansRegular text-black text-lg">
+        <View className="items-center  bg-black ">
+          <Text className="font-WorksansRegular text-white text-lg">
             current Balance
           </Text>
-          <Text className="font-WorksansSemiBold text-4xl text-black ">
-            {user?.coins}
+          <Text className="font-WorksansSemiBold text-4xl text-white ">
+            {Number(user?.coins).toLocaleString('en-IN')}
           </Text>
           <ButtonFull
             title={'Transfer Coin'}
-            buttonStyle={'w-3/6 mt-4 rounded-xl'}
+            buttonStyle={'w-3/6 mt-4 mb-8 rounded-xl'}
             textStyle={'text-white'}
             onPress={() => navigation.push('TransferCoin')}
           />
@@ -52,7 +53,9 @@ const Wallet = ({navigation}) => {
               setPage(page => page + 1);
             }
           }}
-          renderItem={({item}) => <TransactionCard item={item} />}
+          renderItem={({item, index}) => (
+            <TransactionCard item={item} index={index} />
+          )}
         />
       </SafeAreaView>
     );
@@ -76,14 +79,17 @@ const Header = ({navigation}) => {
   );
 };
 
-const TransactionCard = ({item}) => {
+const TransactionCard = ({item, index}) => {
   const transactionIcon =
     item.type === 'CREDIT' ? 'arrow-down-outline' : 'arrow-up-outline';
   const color = item.status === 'SUCCESS' ? 'text-green-500' : 'text-red-500';
   const ArrowColor = item.type === 'CREDIT' ? 'green' : 'red';
 
   return (
-    <View className="border mb-1 border-neutral-200 bg-white mx-1 p-3 flex-row items-center rounded-lg justify-between">
+    <Animated.View
+      entering={FadeInRight.delay(index * 100).duration(500)}
+      style={{marginTop: index == 0 ? 4 : 0}}
+      className="border mb-1 border-neutral-200 bg-white mx-3 p-3 flex-row items-center rounded-lg justify-between">
       <View className="flex-row items-center">
         <Icon name={transactionIcon} size={28} color={ArrowColor} />
         <View className="ml-3">
@@ -103,6 +109,6 @@ const TransactionCard = ({item}) => {
           {item?.status}
         </Text>
       </View>
-    </View>
+    </Animated.View>
   );
 };

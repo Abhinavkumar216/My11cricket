@@ -81,7 +81,7 @@ const ImageItem = ({item,navigation}) => {
   return (
     <Pressable
       className="my-3"
-      style={{width: width}}
+      style={{width: width-8}}
       onPress={onCorousalPress}>
       <Image
         source={{uri: item?.imageLink}}
