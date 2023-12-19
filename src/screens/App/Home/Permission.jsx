@@ -67,7 +67,7 @@ const Update = ({navigation}) => {
 
       <ButtonFull
         title={'Update'}
-        buttonStyle={'bg-black my-5'}
+        buttonStyle={'bg-[#181928] my-5'}
         textStyle={'text-white'}
         onPress={() => Linking.openSettings()}
       />
@@ -109,7 +109,7 @@ const NotificationPermission = ({navigation}) => {
       </View>
       <ButtonFull
         title={'Allow Notification'}
-        buttonStyle={'bg-black my-5'}
+        buttonStyle={'bg-[#181928] my-5'}
         textStyle={'text-white'}
         onPress={() => Linking.openSettings()}
       />
@@ -152,7 +152,7 @@ const LocationPermission = ({navigation}) => {
       </View>
       <ButtonFull
         title={'Enable Location'}
-        buttonStyle={'bg-black my-5'}
+        buttonStyle={'bg-[#181928] my-5'}
         textStyle={'text-white'}
         onPress={() => Linking.openSettings()}
       />

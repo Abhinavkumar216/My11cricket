@@ -44,7 +44,7 @@ const CompletedCard = ({Data}) => {
           <Text className="font-WorksansRegular text-base text-black mr-3">
             View All
           </Text>
-          <Icon name="chevron-forward-outline" size={18} color={'#000'} />
+          <Icon name="chevron-forward-outline" size={18} color={'#181928'} />
         </Pressable>
       </View>
 
@@ -86,8 +86,8 @@ const Card = ({navigation, item}) => {
   return (
     <Pressable
       onPress={() => navigation.navigate('Details', {item})}
-      className="flex-1 "
-      style={{width: width-24}}>
+      className="flex-1"
+      style={{width: width, paddingHorizontal: 12}}>
       <View className="border rounded-xl border-zinc-200 mt-3 bg-white">
         {/* <View className="bg-gray-200 rounded-t-xl p-1 px-2 py-2">
           <Text className="text-black font-WorksansRegular">

@@ -1,17 +1,21 @@
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import {Image, ImageBackground, Pressable, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CountdownTimer from '../../../components/Countdown';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import Animated, {FadeInDown} from 'react-native-reanimated';
 
 const UpcomingCard = ({item}) => {
   const navigation = useNavigation();
   // console.log(item);
 
   return (
-    <Animated.View entering={FadeInDown.delay(300).duration(500)}>
+    <LinearGradient
+    start={{x:1,y:0}}
+    end={{x:0,y:0}}
+      colors={['rgba(229, 86, 4, 0.1)', '#ffffff50']}
+      className=" mx-3 mt-4 border rounded-xl border-zinc-200 bg-white">
       <Pressable
         onPress={() =>
           navigation.navigate('UpcomingMatches', {
@@ -21,9 +25,8 @@ const UpcomingCard = ({item}) => {
             team2: item?.team2?.teamSName,
             team2Flag: item?.team2?.imageLink,
           })
-        }
-        className=" py-1 mx-3 mt-3 border rounded-xl border-zinc-200 bg-white">
-        <View className="bg-white px-3 rounded-t-xl pt-1 flex-row justify-between">
+        }>
+        <View className="bg-white px-3 rounded-t-xl py-2 flex-row justify-between">
           <Text
             ellipsizeMode="tail"
             numberOfLines={1}
@@ -32,7 +35,7 @@ const UpcomingCard = ({item}) => {
           </Text>
           <Text
             ellipsizeMode="tail"
-            className="font-WorksansMedium  text-right text-zinc-500">
+            className="font-WorksansMediumtext-right text-zinc-500">
             # {item?.matchDesc}
           </Text>
         </View>
@@ -53,7 +56,7 @@ const UpcomingCard = ({item}) => {
           </Text>
         </LinearGradient>
       </Pressable>
-    </Animated.View>
+    </LinearGradient>
   );
 };
 
@@ -66,7 +69,7 @@ const Competitor1 = ({team1}) => {
         {team1?.imageLink && (
           <Image
             source={{uri: team1?.imageLink}}
-            className="w-14 h-14 mr-1"
+            className="w-14 h-14 mr-1 rounded-full"
             resizeMode="contain"
           />
         )}
@@ -96,7 +99,7 @@ const Status = ({timer}) => {
 
 const Competitor2 = ({team2}) => {
   return (
-    <View >
+    <View>
       <View className="flex-row items-center justify-between ">
         <Text className="text-base font-WorksansSemiBold text-black text-right">
           {team2?.teamSName}
@@ -104,7 +107,7 @@ const Competitor2 = ({team2}) => {
         {team2?.imageLink && (
           <Image
             source={{uri: team2?.imageLink}}
-            className="w-14 h-14 ml-1"
+            className="w-14 h-14 ml-1 rounded-full"
             resizeMode="contain"
           />
         )}

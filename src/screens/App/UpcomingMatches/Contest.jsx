@@ -121,7 +121,7 @@ const ContestCard = ({item, navigation, index}) => {
         <ProgressBar
           theme={{colors: {primary: '#fff'}}}
           progress={item.joinedPlayers / item?.totalPlayersToJoin}
-          color={'#000'}
+          color={'#181928'}
         />
         <View className="flex-row justify-between">
           <Text className="font-WorksansRegular text-red-500">

@@ -17,6 +17,8 @@ import {useSelector} from 'react-redux';
 import {userstate} from '../../../Services/State/userSlice';
 import {AuthContext} from '../../../Services/AuthContext';
 import Refer from '../Profile/Refer';
+import BottomNavigator from '../BottomNavigation/BottomNavigator';
+import Rules from '../BottomNavigation/Rules';
 
 const Drawer = createDrawerNavigator();
 
@@ -26,15 +28,15 @@ export default function DrawerNavigator() {
       // screenOptions={{headerShown: false}}
       drawerContent={props => <CustomDrawer {...props} />}>
       <Drawer.Screen
-        name="Home"
-        component={Home}
+        name="BottomHome"
+        component={BottomNavigator}
         options={{headerShown: false}}
       />
       <Drawer.Screen
         name="Profile"
         component={Profile}
         options={{
-          headerStyle: {backgroundColor: '#000'},
+          headerStyle: {backgroundColor: '#181928'},
           // headerTitleStyle: {color: '#fff'},
           headerTintColor: '#fff',
           headerTitleStyle: {
@@ -47,13 +49,26 @@ export default function DrawerNavigator() {
         name="Refer"
         component={Refer}
         options={{
-          headerStyle: {backgroundColor: '#000'},
+          headerStyle: {backgroundColor: '#181928'},
           // headerTitleStyle: {color: '#fff'},
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontFamily: 'WorkSans-Medium',
           },
           headerTitle: 'Invite Friends',
+        }}
+      />
+      <Drawer.Screen
+        name="Rules"
+        component={Rules}
+        options={{
+          headerStyle: {backgroundColor: '#181928'},
+          // headerTitleStyle: {color: '#fff'},
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontFamily: 'WorkSans-Medium',
+          },
+          headerTitle: 'Rules',
         }}
       />
     </Drawer.Navigator>
@@ -65,11 +80,11 @@ const CustomDrawer = props => {
   const user = useSelector(userstate);
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{backgroundColor: '#000', paddingVertical: 25}}>
+      <View style={{backgroundColor: '#181928', paddingVertical: 25}}>
         <Image
           source={{uri: user?.avatar}}
           style={styles.sideMenuProfileIcon}
-          onProgress={() => <ActivityIndicator size={'small'} color={'#000'} />}
+          onProgress={() => <ActivityIndicator size={'small'} color={'#181928'} />}
         />
         <Text
           style={{
@@ -94,35 +109,35 @@ const CustomDrawer = props => {
 
       <DrawerItem
         label="Home"
-        icon={() => <Icon name="home-outline" size={24} color={'#000'} />}
+        icon={() => <Image source={require('../../../../assets/icons/home.png')} style={{width:28, height:28}}/>}
         labelStyle={styles.Items}
         onPress={() => props.navigation.navigate('Home')}
         style={{marginTop: 25}}
       />
       <DrawerItem
         label="My Profile"
-        icon={() => <Icon name="person-outline" size={24} color={'#000'} />}
+        icon={() => <Image source={require('../../../../assets/icons/user.png')} style={{width:28, height:28}}/>}
         labelStyle={styles.Items}
         onPress={() => props.navigation.navigate('Profile')}
         // style={{marginTop: 25}}
       />
-      {/* <DrawerItem
-        label="Help & Support"
-        icon={() => <Icon name="help-outline" size={24} color={'#000'} />}
+      <DrawerItem
+        label="Rules"
+        icon={() => <Image source={require('../../../../assets/icons/book.png')} style={{width:28, height:28}}/>}
         labelStyle={styles.Items}
-        onPress={() => {}}
+        onPress={() =>  props.navigation.navigate('Rules')}
         // style={{ marginTop:25}}
-      /> */}
+      />
       <DrawerItem
         label="Refer & Earn"
-        icon={() => <Icon name="people-outline" size={24} color={'#000'} />}
+        icon={() => <Image source={require('../../../../assets/icons/refer.png')} style={{width:28, height:28}}/>}
         labelStyle={styles.Items}
         onPress={() => props.navigation.navigate('Refer')}
         // style={{ marginTop:25}}
       />
       <DrawerItem
         label="Logout"
-        icon={() => <Icon name="log-out-outline" size={24} color={'#000'} />}
+        icon={() => <Image source={require('../../../../assets/icons/logout.png')} style={{width:28, height:28}}/>}
         labelStyle={styles.Items}
         onPress={logout}
         // style={{ marginTop:25}}
@@ -163,5 +178,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  Items: {fontFamily: 'WorkSans-Medium', fontSize: 16, color: '#000'},
+  Items: {fontFamily: 'WorkSans-Medium', fontSize: 16, color: '#181928'},
 });

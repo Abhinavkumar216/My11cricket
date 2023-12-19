@@ -53,7 +53,7 @@ const OTP = () => {
             borderRadius:5
           }}
           autoFocus
-          inputStyles={{fontSize: 26, textAlign: 'center', color: '#000'}}
+          inputStyles={{fontSize: 26, textAlign: 'center', color: '#181928'}}
         />
       </Animated.View>
       {/* <Text className="font-WorksansRegular text-base mx-3 text-black">

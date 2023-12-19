@@ -12,7 +12,7 @@ const AuthNavigator = () => {
     <Stack.Navigator
       initialRouteName="GetStarted"
       screenOptions={{
-        headerStyle: {backgroundColor: '#000'},
+        headerStyle: {backgroundColor: '#181928'},
         headerTintColor: '#fff',
         headerTitleStyle: {
           fontFamily: 'WorkSans-Medium',

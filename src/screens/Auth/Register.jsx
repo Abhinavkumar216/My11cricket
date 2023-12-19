@@ -13,7 +13,7 @@ const Register = () => {
   const [Mobile, setMobile] = useState(null);
   const [invitecode, setInvitecode] = useState(null);
   const [Name, setName] = useState(null);
-  const theme = {colors: {primary: '#000'}};
+  const theme = {colors: {primary: '#181928'}};
   return (
     <View className="flex-1 pt-5 bg-neutral-100">
       <Animated.View entering={FadeInDown.delay(100).duration(1000)}>

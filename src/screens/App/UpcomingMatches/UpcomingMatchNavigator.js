@@ -101,13 +101,13 @@ function MyTabBar({state, descriptors, navigation, position, routes}) {
                   style={[
                     styles.Text,
                     {opacity},
-                    {color: '#000', fontSize: 16},
+                    {color: '#181928', fontSize: 16},
                   ]}>
                   {label}
                 </Animated.Text>
               ) : (
                 <Animated.Text
-                  style={[styles.Text, {opacity}, {color: '#000'}]}>
+                  style={[styles.Text, {opacity}, {color: '#181928'}]}>
                   {label}
                 </Animated.Text>
               )}

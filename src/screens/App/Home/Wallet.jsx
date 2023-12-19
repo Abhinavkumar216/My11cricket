@@ -1,16 +1,15 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, Pressable, FlatList} from 'react-native';
-import ButtonFull from '../../../components/ButtonFull';
+import React, { useState } from 'react';
+import { FlatList, Pressable, Text, View } from 'react-native';
+import Animated, { FadeInRight } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useSelector} from 'react-redux';
-import {userstate} from '../../../Services/State/userSlice';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useGetWalletQuery} from '../../../Services/API/UserAPI';
-import Loading from '../../../components/Loading';
-import ErrorState from '../../../components/ErrorState';
+import { useSelector } from 'react-redux';
+import { useGetWalletQuery } from '../../../Services/API/UserAPI';
+import { userstate } from '../../../Services/State/userSlice';
+import ButtonFull from '../../../components/ButtonFull';
 import EmptyState from '../../../components/EmptyState';
-import uuid from 'react-native-uuid';
-import Animated, {FadeInRight} from 'react-native-reanimated';
+import ErrorState from '../../../components/ErrorState';
+import Loading from '../../../components/Loading';
 
 const Wallet = ({navigation}) => {
   const [page, setPage] = useState(1);
@@ -28,7 +27,7 @@ const Wallet = ({navigation}) => {
     return (
       <SafeAreaView className="flex-1">
         <Header navigation={navigation} />
-        <View className="items-center  bg-black ">
+        <View className="items-center  bg-[#181928] ">
           <Text className="font-WorksansRegular text-white text-lg">
             current Balance
           </Text>
@@ -66,7 +65,7 @@ export default Wallet;
 
 const Header = ({navigation}) => {
   return (
-    <View className="bg-black h-16 items-center justify-center ">
+    <View className="bg-[#181928] h-16 items-center justify-center ">
       <Pressable
         onPress={() => navigation.pop()}
         className="p-5 absolute left-0">

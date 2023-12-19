@@ -22,7 +22,7 @@ const GetStarted = () => {
         className="flex-1 justify-end ">
         <Animated.View
           entering={FadeInDown.springify()}
-          className="bg-black h-80 opacity-90 p-10 rounded-3xl">
+          className="bg-[#181928] h-80 opacity-90 p-10 rounded-3xl">
           <Text
             entering={FadeInDown.delay(200).springify()}
             className="text-2xl text-white text-center font-WorksansSemiBold">

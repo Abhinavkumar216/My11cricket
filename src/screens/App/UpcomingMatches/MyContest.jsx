@@ -56,7 +56,7 @@ export const Card = ({navigation, item}) => {
         <View>
           <ProgressBar
             progress={item.joinedPlayers / item.totalPlayersToJoin}
-            color={'#000'}
+            color={'#181928'}
             className="my-2"
           />
           <View className="flex-row justify-between">

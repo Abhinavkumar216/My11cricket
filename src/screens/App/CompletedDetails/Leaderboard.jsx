@@ -74,7 +74,7 @@ const Ranking = ({navigation}) => {
         end={{x: 1, y: 0}}
         className="w-full rounded-r-lg  px-3 py-1 flex-row items-center justify-around">
         <View className="flex-row items-center">
-          <Icon name="trophy-outline" size={26} color={'#000'} />
+          <Icon name="trophy-outline" size={26} color={'#181928'} />
           <Text className="font-WorksansSemiBold text-lg text-black ml-3">
             $2 Crores
           </Text>

@@ -127,7 +127,7 @@ const SelectTeams = () => {
         {myTeams?.length == 11 && (
           <ButtonFull
             title={'Save My Team'}
-            buttonStyle={'bg-black w-full py-1'}
+            buttonStyle={'bg-[#181928] w-full py-1'}
             textStyle={'text-white'}
             onPress={onNextClick}
           />
@@ -295,7 +295,7 @@ const PlayersItem = ({item, setmyTeams, myTeams, index}) => {
         // onPress={() => navigation.push('PlayerProfile', {item: item})}
         >
           <Image source={{uri: item?.image}} className="w-20 h-20" />
-          <Text className="bg-black text-xs text-white absolute bottom-0 px-1 font-WorksansRegular">
+          <Text className="bg-[#181928] text-xs text-white absolute bottom-0 px-1 font-WorksansRegular">
             {item?.team}
           </Text>
         </Pressable>
@@ -346,7 +346,7 @@ const TopSection = ({team1, team1Flag, team2, team2Flag, myTeams}) => {
   // console.log((myTeams?.length / 11).toFixed(1));
 
   return (
-    <View className="bg-black p-5 pt-2 border-red-600">
+    <View className="bg-[#181928] p-5 pt-2 border-red-600">
       <Text className="font-WorksansRegular text-center text-white text-base">
         Maximum of 11 players from one team
       </Text>
@@ -429,7 +429,7 @@ const MyCaptain = ({item, myTeams}) => {
     myTeams[myTeams.findIndex(obj => obj._id == item._id)]?.isCaptain == true
   ) {
     return (
-      <View className="bg-black w-8 h-8 justify-center items-center rounded-full">
+      <View className="bg-[#181928] w-8 h-8 justify-center items-center rounded-full">
         <Text className="font-WorksansMedium text-white text-cente">2x</Text>
       </View>
     );
@@ -448,7 +448,7 @@ const MyViceCaptain = ({item, myTeams}) => {
     true
   ) {
     return (
-      <View className="bg-black w-8 h-8 justify-center items-center rounded-full">
+      <View className="bg-[#181928] w-8 h-8 justify-center items-center rounded-full">
         <Text className="font-WorksansMedium text-white text-cente">1.5x</Text>
       </View>
     );

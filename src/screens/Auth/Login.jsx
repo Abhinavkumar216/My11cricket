@@ -21,7 +21,7 @@ const Login = () => {
           onChangeText={setMobile}
           keyboardType="phone-pad"
           autoFocus
-          theme={{colors: {primary: '#000'}}}
+          theme={{colors: {primary: '#181928'}}}
           maxLength={10}
           dataDetectorTypes={'phoneNumber'}
           editable={!isLoading}

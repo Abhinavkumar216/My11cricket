@@ -143,7 +143,7 @@ const MyTeams = () => {
             icon="plus"
             color="#fff"
             label="Create Team"
-            className="absolute  bottom-14 right-8 bg-black "
+            className="absolute  bottom-14 right-8 bg-[#181928] "
             onPress={() =>
               navigation.navigate('SelectTeams', {
                 MatchId,
@@ -172,7 +172,7 @@ const MyTeams = () => {
                   <ButtonFull
                     title={'Submit'}
                     onPress={() => onTeamSelect(props.data._id)}
-                    buttonStyle={'bg-black mt-3'}
+                    buttonStyle={'bg-[#181928] mt-3'}
                     textStyle={'text-white'}
                   />
                 </View>

@@ -325,7 +325,7 @@ const Profile = () => {
       <ButtonFull
         title={'Update Profile'}
         onPress={UserUpdate}
-        buttonStyle={'bg-black mb-20 mt-10'}
+        buttonStyle={'bg-[#181928] mb-20 mt-10'}
         textStyle={'text-white'}
       />
     </ScrollView>
@@ -336,7 +336,7 @@ export default Profile;
 
 const Header = () => {
   return (
-    <View className="bg-black h-16 items-center flex-row justify-center">
+    <View className="bg-[#181928] h-16 items-center flex-row justify-center">
       <Text className="text-white font-WorksansMedium text-xl text-center">
         My Profile
       </Text>
@@ -349,14 +349,14 @@ const ImageUpdate = ({avatar, PicImage, uploading}) => {
   return (
     <View className="w-40 h-40 rounded-full self-center mt-5 bg-neutral-300 justify-center items-center">
       {uploading ? (
-        <ActivityIndicator size={'small'} color={'#000'} />
+        <ActivityIndicator size={'small'} color={'#181928'} />
       ) : (
         <Image source={{uri: avatar}} className="h-full w-full rounded-full" />
       )}
       <Pressable
         onPress={PicImage}
         className="absolute bottom-0 right-0 bg-white p-2 rounded-full">
-        <Icon name="camera" size={34} color={'#000'} />
+        <Icon name="camera" size={34} color={'#181928'} />
       </Pressable>
     </View>
   );

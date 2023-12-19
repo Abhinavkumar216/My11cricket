@@ -33,7 +33,7 @@ const TransferCoin = ({navigation}) => {
   };
   return (
     <View
-      className=" flex-1 justify-end bg-black">
+      className=" flex-1 justify-end bg-[#181928]">
       <View className="items-center bg-white  rounded-t-3xl p-4">
         <Pressable
           className="absolute right-5 top-5 "
@@ -70,7 +70,7 @@ const TransferCoin = ({navigation}) => {
 
         <ButtonFull
           title={'Transfer Now'}
-          buttonStyle={'bg-black my-7'}
+          buttonStyle={'bg-[#181928] my-7'}
           textStyle={'text-white'}
           onPress={OnTransfer}
         />

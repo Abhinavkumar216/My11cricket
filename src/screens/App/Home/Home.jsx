@@ -46,7 +46,7 @@ const Home = () => {
   if (isSuccess) {
     return (
       <SafeAreaView className="flex-1 bg-neutral-50">
-        <StatusBar animated backgroundColor={'#000'} translucent />
+        <StatusBar animated backgroundColor={'#181928'} translucent />
         <HomeHeader />
         <FlatList
           showsVerticalScrollIndicator={false}

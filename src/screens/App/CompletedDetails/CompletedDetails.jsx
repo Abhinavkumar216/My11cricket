@@ -35,7 +35,7 @@ const CompletedDetails = ({navigation}) => {
     // console.log('completed =>', data);
     return (
       <View>
-        <View className="bg-black p-3">
+        <View className="bg-[#181928] p-3">
           <View className="items-center">
             <Text className="text-black bg-white text-sm w-20 px-3 py-2 text-center rounded-full font-WorksansMedium">
               Scores

@@ -18,7 +18,7 @@ const HomeHeader = () => {
   const user = useSelector(userstate);
   const [Loading, setLoading] = useState(true);
   return (
-    <View className="border flex-row py-4 px-3 bg-black items-center ">
+    <View className=" flex-row py-4 px-3 bg-[#181928] items-center ">
       <Pressable onPress={() => navigation.openDrawer()}>
         {user?.avatar && (
           <Image
@@ -30,7 +30,7 @@ const HomeHeader = () => {
         <ActivityIndicator
           size={'small'}
           className="absolute top-0 bottom-0 right-0 left-0"
-          color={'#000'}
+          color={'#181928'}
           animating={Loading}
         />
         <View className="absolute -bottom-1 -right-1  p-1 rounded-full">

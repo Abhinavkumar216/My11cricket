@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <View className="flex-row items-center  py-2 my-2 ">
       <Pressable onPress={() => navigation.pop()} className=" p-1 ml-2">
-        <Icon name="arrow-back-outline" size={26} color={'#000'} />
+        <Icon name="arrow-back-outline" size={26} color={'#181928'} />
       </Pressable>
       <View className="justify-center items-center flex-1 flex-row">
         <Image
@@ -58,7 +58,7 @@ const TopPoints = () => {
 
 const TopRank = ({rank}) => {
   return (
-    <View className="absolute bg-black rounded-full justify-center items-center w-6 h-6 -bottom-3 ">
+    <View className="absolute bg-[#181928] rounded-full justify-center items-center w-6 h-6 -bottom-3 ">
       <Text className="font-WorksansMedium text-white">{rank}</Text>
     </View>
   );

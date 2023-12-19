@@ -37,7 +37,7 @@ export default function CompletedDetailsNavigation() {
       <Tab.Screen
         name="MyContest"
         component={MyContest}
-        options={{title: 'My Contests'}}
+        options={{title: 'My Contests',}}
         initialParams={{matchId}}
       />
       <Tab.Screen
@@ -123,13 +123,13 @@ function MyTabBar({state, descriptors, navigation, position}) {
                   style={[
                     styles.Text,
                     {opacity},
-                    {color: '#000', fontFamily: 'WorkSans-Medium'},
+                    {color: '#181928', fontFamily: 'WorkSans-Medium'},
                   ]}>
                   {label}
                 </Animated.Text>
               ) : (
                 <Animated.Text
-                  style={[styles.Text, {opacity}, {color: '#000'}]}>
+                  style={[styles.Text, {opacity}, {color: '#181928'}]}>
                   {label}
                 </Animated.Text>
               )}
@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     // flex:1,
+    elevation:0
   },
   ItemWrap: {
     // borderWidth: 1,

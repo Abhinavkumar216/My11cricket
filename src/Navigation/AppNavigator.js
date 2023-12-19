@@ -16,13 +16,12 @@ import Lineup from '../screens/App/UpcomingMatches/Lineup';
 
 const Stack = createNativeStackNavigator();
 
-
 const AppNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{
-        headerStyle: {backgroundColor: '#000'},
+        headerStyle: {backgroundColor: '#181928'},
         headerTintColor: '#fff',
         headerTitleStyle: {
           fontFamily: 'WorkSans-Medium',
@@ -38,7 +37,12 @@ const AppNavigator = () => {
       <Stack.Screen
         name="Details"
         component={CompletedDetailsNavigation}
-        options={{animation: 'slide_from_right'}}
+        options={{
+          animation: 'slide_from_right',
+          contentStyle: {
+            backgroundColor: '#181928',
+          },
+        }}
       />
       <Stack.Screen
         name="MyMatches"
@@ -69,17 +73,17 @@ const AppNavigator = () => {
         }}
       />
       <Stack.Screen
-          name="Wallet"
-          component={Wallet}
-          options={{
-            animation: 'slide_from_bottom',
-            animationDuration: 500,
-            headerShown: false,
-            gestureDirection: 'vertical',
-            fullScreenGestureEnabled: true,
-            animationTypeForReplace: 'push',
-          }}
-        />
+        name="Wallet"
+        component={Wallet}
+        options={{
+          animation: 'slide_from_bottom',
+          animationDuration: 500,
+          headerShown: false,
+          gestureDirection: 'vertical',
+          fullScreenGestureEnabled: true,
+          animationTypeForReplace: 'push',
+        }}
+      />
 
       <Stack.Group screenOptions={{presentation: 'transparentModal'}}>
         <Stack.Screen
@@ -91,7 +95,7 @@ const AppNavigator = () => {
             headerShown: false,
           }}
         />
-        
+
         <Stack.Screen
           name="SelectTeams"
           component={SelectTeams}

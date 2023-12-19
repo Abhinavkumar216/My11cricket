@@ -10,7 +10,7 @@ const PlayerProfile = () => {
 console.log(JSON.stringify(item))
   return (
     <SafeAreaView className="flex-1">
-      <View className="flex-row items-center bg-black">
+      <View className="flex-row items-center bg-[#181928]">
         <Image source={{uri: item?.image}} className="w-28 h-28 mr-3" />
         <View>
           <Text className="font-WorksansMedium text-2xl text-white">

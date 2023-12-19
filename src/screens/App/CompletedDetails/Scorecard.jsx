@@ -171,7 +171,7 @@ const TopScoreOne = ({data, expanded, setExpanded}) => {
               expanded.cardOne ? 'chevron-up-outline' : 'chevron-down-outline'
             }
             size={28}
-            color={'#000'}
+            color={'#181928'}
           />
         </View>
       </Pressable>
@@ -203,7 +203,7 @@ const TopScoreTwo = ({data, expanded, setExpanded}) => {
               expanded.cardTwo ? 'chevron-up-outline' : 'chevron-down-outline'
             }
             size={28}
-            color={'#000'}
+            color={'#181928'}
           />
         </View>
       </Pressable>

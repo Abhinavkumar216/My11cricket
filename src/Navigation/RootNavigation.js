@@ -37,7 +37,7 @@ export default function RootNavigation() {
     // Specify a custom property in nested object
     colors: {
       ...MD3LightTheme.colors,
-      primary:'#000'
+      primary:'#181928'
     },
   };
 

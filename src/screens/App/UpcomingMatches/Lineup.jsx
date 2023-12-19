@@ -93,7 +93,7 @@ const PlayerCard = ({item}) => {
         className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm w-14 ">
         {ShortName}
       </Text>
-      {/* <Text className="bg-black text-center font-WorksansMedium text-xs text-white p-1 rounded-sm">
+      {/* <Text className="bg-[#181928] text-center font-WorksansMedium text-xs text-white p-1 rounded-sm">
         {item.role}
       </Text> */}
     </View>
