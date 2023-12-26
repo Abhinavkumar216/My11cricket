@@ -36,7 +36,7 @@ const CountdownTimer = ({remaining}) => {
   }
 
   return (
-    <Text className="text-xs font-WorksansMedium text-red-600 ml-2 bg-red-50 px-3 py-1 rounded-md">
+    <Text className="text-xs font-WorksansMedium text-red-600 ml-2 bg-red-100 px-3 py-1 rounded-md">
       {isExpired ? 'Expired' : msToTime(counter)}
     </Text>
   );

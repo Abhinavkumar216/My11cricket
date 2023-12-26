@@ -1,14 +1,14 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
-import {Pressable, SectionList, Text, View, RefreshControl} from 'react-native';
-import {MD3Colors, ProgressBar} from 'react-native-paper';
-import {useDispatch, useSelector} from 'react-redux';
+import {Pressable, RefreshControl, SectionList, Text, View} from 'react-native';
+import {ProgressBar} from 'react-native-paper';
+import Animated, {FadeInDown} from 'react-native-reanimated';
+import {useSelector} from 'react-redux';
 import {useUpcomingContestsQuery} from '../../../Services/API/UpcomingAPI';
-import {joinpool, setPurpose} from '../../../Services/State/joinPoolSlice';
 import {userstate} from '../../../Services/State/userSlice';
 import ErrorState from '../../../components/ErrorState';
 import Loading from '../../../components/Loading';
-import Animated, {FadeInDown, FadeInRight} from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Contest = () => {
   const {
@@ -69,7 +69,7 @@ const ContestHeader = ({title, index}) => {
   return (
     <Animated.View
       entering={FadeInDown.delay(index * 200).duration(1000)}
-      className="ml-4 mt-2">
+      className="ml-4 ">
       <Text className="font-WorksansMedium text-lg text-black">{title}</Text>
     </Animated.View>
   );
@@ -97,8 +97,8 @@ const ContestCard = ({item, navigation, index}) => {
       entering={FadeInDown.delay(index * 200).duration(1000)}
       className="border-2 mx-3  rounded-xl bg-white my-1 border-zinc-200">
       <View className="flex-row justify-between px-3 pt-1">
-        <Text className="font-WorksansRegular text-black">Prize Pool</Text>
-        <Text className="font-WorksansRegular text-black">Entry</Text>
+        <Text className="font-WorksansRegular text-black text-sm">Prize Pool</Text>
+        <Text className="font-WorksansRegular text-black text-sm">Entry</Text>
       </View>
 
       <View className="flex-row justify-between my-2 items-center px-3 ">
@@ -106,10 +106,10 @@ const ContestCard = ({item, navigation, index}) => {
           {item?.prizePool}
         </Text>
         <Pressable
-          className="bg-green-600 rounded-md px-5 py-1"
+          className="bg-green-400 rounded-md px-5 py-1"
           disabled={user?.poolEntries?.includes(item._id)}
           onPress={onjoinpool}>
-          <Text className="font-WorksansMedium text-white text-base">
+          <Text className="font-WorksansMedium text-white text-base text-center">
             {user?.poolEntries?.includes(item._id)
               ? 'Joined'
               : ` ${item?.entryFee}`}
@@ -119,29 +119,46 @@ const ContestCard = ({item, navigation, index}) => {
 
       <View className=" px-3 mb-2">
         <ProgressBar
-          theme={{colors: {primary: '#fff'}}}
           progress={item.joinedPlayers / item?.totalPlayersToJoin}
           color={'#181928'}
+          className='rounded-lg'
         />
         <View className="flex-row justify-between">
-          <Text className="font-WorksansRegular text-red-500">
+          <Text className="font-WorksansRegular text-red-500 text-xs">
             {item?.joinedPlayers} Player Joined
           </Text>
-          <Text className="font-WorksansRegular text-gray-500">
+          <Text className="font-WorksansRegular text-gray-500 text-xs">
             {item?.totalPlayersToJoin} Spots
           </Text>
         </View>
       </View>
 
-      <View className="bg-white px-3 rounded-xl flex-row justify-around py-2">
-        <Text className="text-neutral-900 font-WorksansRegular">
-          {item?.firstPrize}
-        </Text>
-        <Text className="text-neutral-900 font-WorksansRegular">
-          {item?.winnerPercentage}%
-        </Text>
-        <Text className="text-neutral-900 font-WorksansRegular">Single</Text>
-        <Text className="text-neutral-900 font-WorksansRegular">Flexible</Text>
+      <View className="bg-green-100 px-3 flex-row justify-around py-1">
+        <View className="flex-row items-center flex-1">
+          <Icon name="medal-outline" size={12} color={'#000'} />
+          <Text className="text-neutral-900 font-WorksansRegular text-xs ml-1">
+            {item?.firstPrize}
+          </Text>
+        </View>
+        <View className="flex-row items-center flex-1">
+          <Icon name="trophy-outline" size={12} color={'#000'} />
+
+          <Text className="text-neutral-900 font-WorksansRegular text-xs ml-1">
+            {item?.winnerPercentage}%
+          </Text>
+        </View>
+        <View className="flex-row items-center flex-1">
+          <Icon name="woman-outline" size={12} color={'#000'} />
+          <Text className="text-neutral-900 font-WorksansRegular text-xs ml-1">
+            Single
+          </Text>
+        </View>
+        <View className="flex-row items-center flex-1">
+          <Icon name="shuffle-outline" size={12} color={'#000'} />
+          <Text className="text-neutral-900 font-WorksansRegular text-xs ml-1">
+            Flexible
+          </Text>
+        </View>
       </View>
     </Animated.View>
   );

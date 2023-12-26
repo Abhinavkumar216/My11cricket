@@ -1,6 +1,13 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useContext, useState} from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  Image,
+} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {AuthContext} from '../../Services/AuthContext';
 import ButtonFull from '../../components/ButtonFull';
@@ -13,6 +20,16 @@ const Login = () => {
 
   return (
     <View className="flex-1 pt-5">
+      <StatusBar animated barStyle={'dark-content'} />
+      <View className=" items-center my-16">
+        <Image
+          source={require('../../../assets/icons/round.png')}
+          className="h-32 w-32"
+        />
+        <Text className="font-WorksansSemiBold text-4xl text-black">
+          My11Cricket
+        </Text>
+      </View>
       <Animated.View entering={FadeInDown.delay(200).duration(1000)}>
         <TextInput
           mode="outlined"
@@ -20,13 +37,19 @@ const Login = () => {
           value={Mobile}
           onChangeText={setMobile}
           keyboardType="phone-pad"
+          left={
+            <TextInput.Affix
+              text="+91"
+              textStyle={{color: '#000', fontFamily: 'WorkSans-Medium'}}
+            />
+          }
           autoFocus
           theme={{colors: {primary: '#181928'}}}
           maxLength={10}
           dataDetectorTypes={'phoneNumber'}
           editable={!isLoading}
           style={{
-            width: '90%',
+            width: '92%',
             alignSelf: 'center',
             marginTop: 10,
             backgroundColor: '#fff',

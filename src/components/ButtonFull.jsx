@@ -18,7 +18,7 @@ const ButtonFull = ({
   const bgcolor = disabled ? 'bg-green-200' : 'bg-green-500';
   return (
     <TouchableOpacity
-      className={`${bgcolor} w-11/12 self-center ${buttonStyle}`}
+      className={`${bgcolor} w-11/12 rounded-md self-center ${buttonStyle}`}
       disabled={disabled}
       onPress={onPress}>
       {isLoading ? (

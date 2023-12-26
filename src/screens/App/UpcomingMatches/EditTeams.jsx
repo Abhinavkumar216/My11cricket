@@ -14,6 +14,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
   useCreateTeamMutation,
+  useEditTeamMutation,
   useUpcomingSquadQuery,
 } from '../../../Services/API/UpcomingAPI';
 import ButtonFull from '../../../components/ButtonFull';
@@ -22,20 +23,24 @@ import Loading from '../../../components/Loading';
 import {showToast} from '../../../Services/Functions/AuthFunction';
 import Animated, {FadeInDown, FadeInRight} from 'react-native-reanimated';
 import EmptyState from '../../../components/EmptyState';
+import {useUserUpdateMutation} from '../../../Services/API/UserAPI';
 
-const SelectTeams = () => {
+const EditTeams = () => {
   const {
-    params: {MatchId, team1, team1Flag, team2, team2Flag},
+    params: {item},
   } = useRoute();
   const navigation = useNavigation();
 
-  const [onCreateTeam] = useCreateTeamMutation();
+  const [CallOnUpdate] = useEditTeamMutation();
 
-  const {isError, error, isLoading, isSuccess, data} =
-    useUpcomingSquadQuery(MatchId);
+  const {isError, error, isLoading, isSuccess, data} = useUpcomingSquadQuery(
+    item.matchId,
+  );
 
   // const [masterTeam, setMasterTeam] = useState();
-  const [myTeams, setmyTeams] = useState([]);
+
+  const [myTeams, setmyTeams] = useState(item.team);
+  // console.log(myTeams,'<<====>>>>',item.team)
 
   useEffect(() => {
     const backAction = () => {
@@ -61,8 +66,7 @@ const SelectTeams = () => {
     return () => backHandler.remove();
   }, [navigation]);
 
-  const onNextClick = async () => {
-    // console.log('myteams =>');
+  const onUpdateTeam = async id => {
     if (myTeams.filter(item => item.isCaptain === true).length === 0) {
       console.warn('Must Be a Captain in Team');
       showToast({
@@ -83,10 +87,14 @@ const SelectTeams = () => {
 
       return;
     }
-    onCreateTeam({matchId: MatchId, team: myTeams})
+
+    CallOnUpdate({
+      teamId: id,
+      team: myTeams,
+    })
       .unwrap()
-      // .then(payload => console.log('Team Created => ', payload))
-      // .catch(error => console.error('Team Create Error => ', error))
+      .then(payload => console.log('Team Created => ', payload))
+      .catch(error => console.error('Team Create Error => ', error))
       .finally(() => navigation.pop());
   };
 
@@ -95,15 +103,16 @@ const SelectTeams = () => {
   }
 
   if (isSuccess) {
+    // console.log('item => ', item)
     return (
       <SafeAreaView className="flex-1">
-        <TopSection
+        {/* <TopSection
           team1={team1}
           team1Flag={team1Flag}
           team2={team2}
           team2Flag={team2Flag}
           myTeams={myTeams}
-        />
+        /> */}
         {data[0].data.length ? (
           <SectionList
             sections={data}
@@ -140,10 +149,10 @@ const SelectTeams = () => {
 
         {myTeams?.length == 11 && (
           <ButtonFull
-            title={'Save My Team'}
-            buttonStyle={'bg-[#181928] w-full py-1'}
+            title={'Update My Team'}
+            buttonStyle={'bg-[#181928] w-full py-1 rounded-none'}
             textStyle={'text-white'}
-            onPress={onNextClick}
+            onPress={() => onUpdateTeam(item._id)}
           />
         )}
       </SafeAreaView>
@@ -155,11 +164,11 @@ const SelectTeams = () => {
   }
 };
 
-export default SelectTeams;
+export default EditTeams;
 
 const SectionHeader = ({section}) => {
   return (
-    <View className="bg-orange-400 p-3 flex-row">
+    <View className="bg-orange-400 p-3 flex-row ">
       <Text className="font-WorksansMedium text-lg text-white flex-1">
         {section.title}
       </Text>
@@ -439,6 +448,8 @@ const TopWrap = ({team1, team1Flag, team2, team2Flag, myTeams}) => {
 };
 
 const MyCaptain = ({item, myTeams}) => {
+  // console.log('==>>', item.id)
+  // console.log('-->>', myTeams[myTeams.findIndex(obj => obj.playerId)]);
   if (
     myTeams[myTeams.findIndex(obj => obj._id == item._id)]?.isCaptain == true
   ) {

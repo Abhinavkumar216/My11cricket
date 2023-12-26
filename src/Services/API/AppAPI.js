@@ -9,7 +9,9 @@ export const AppAPI = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: async headers => {
       const storage = new MMKV();
-      // console.log(storage.getString('AUTH_TOKEN'))
+      // console.log('Auth => ',storage.getString('AUTH_TOKEN'))
+      // console.log('Access => ',storage.getString('ACCESS_TOKEN'))
+      // console.log('Fa => ',FA_HEADER)
       headers.set('access-token', storage.getString('ACCESS_TOKEN'));
       headers.set('auth-token', storage.getString('AUTH_TOKEN'));
       headers.set('fa-header', FA_HEADER);
@@ -17,7 +19,7 @@ export const AppAPI = createApi({
       return headers;
     },
   }),
-  tagTypes: ['USER','ALLCONTEST',"MYCONTEST","MYTEAM","WALLET"],
+  tagTypes: ['USER','ALLCONTEST',"MYCONTEST","MYTEAM","WALLET","MYCONTESTTEAM"],
   endpoints: builder => ({}),
   keepUnusedDataFor: 30,
   refetchOnFocus: true,

@@ -13,6 +13,7 @@ import Permission from '../screens/App/Home/Permission';
 import TransferCoin from '../screens/App/Home/TransferCoin';
 import PlayerProfile from '../screens/App/UpcomingMatches/PlayerProfile';
 import Lineup from '../screens/App/UpcomingMatches/Lineup';
+import EditTeams from '../screens/App/UpcomingMatches/EditTeams';
 
 const Stack = createNativeStackNavigator();
 
@@ -99,6 +100,19 @@ const AppNavigator = () => {
         <Stack.Screen
           name="SelectTeams"
           component={SelectTeams}
+          options={{
+            animation: 'slide_from_bottom',
+            animationDuration: 500,
+            headerShown: false,
+            gestureDirection: 'vertical',
+            fullScreenGestureEnabled: true,
+            animationTypeForReplace: 'push',
+            presentation: 'fullScreenModal',
+          }}
+        />
+        <Stack.Screen
+          name="EditTeams"
+          component={EditTeams}
           options={{
             animation: 'slide_from_bottom',
             animationDuration: 500,

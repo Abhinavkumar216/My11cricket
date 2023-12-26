@@ -38,13 +38,13 @@ export default function CompletedDetailsNavigation() {
         name="MyContest"
         component={MyContest}
         options={{title: 'My Contests',}}
-        initialParams={{matchId}}
+        initialParams={{matchId,matchStatus}}
       />
       <Tab.Screen
         name="MyTeams"
         component={MyTeams}
         options={{title: 'My Teams'}}
-        initialParams={{matchId}}
+        initialParams={{matchId,matchStatus}}
       />
       <Tab.Screen
         name="Scorecard"
@@ -52,12 +52,12 @@ export default function CompletedDetailsNavigation() {
         options={{title: 'Scorecard'}}
         initialParams={{matchId,matchStatus}}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Leaderboard"
         component={Leaderboard}
         options={{title: 'Leaderboard'}}
         initialParams={{matchId,matchStatus}}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }
@@ -66,9 +66,8 @@ function MyTabBar({state, descriptors, navigation, position}) {
   return (
     <View>
       <CompletedDetails />
-      <ScrollView
-        contentContainerStyle={styles.container}
-        horizontal
+      <View
+        style={styles.container}
         showsHorizontalScrollIndicator={false}>
         {state.routes.map((route, index) => {
           const {options} = descriptors[route.key];
@@ -137,7 +136,7 @@ function MyTabBar({state, descriptors, navigation, position}) {
           );
         })}
         {/* <TabBarIndicator state={state} /> */}
-      </ScrollView>
+      </View>
     </View>
   );
 }
@@ -146,7 +145,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     // flex:1,
-    elevation:0
+    width:'100%',
+    elevation:0,
+    // borderWidth:1,
+    backgroundColor:"White"
   },
   ItemWrap: {
     // borderWidth: 1,
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     paddingVertical: 15,
-    // flex: 1,
+    flex: 1,
     // borderBottomWidth: 2,
   },
   Text: {

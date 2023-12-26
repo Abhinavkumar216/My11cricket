@@ -1,5 +1,5 @@
 import {showToast} from '../Functions/AuthFunction';
-import { resetpool } from '../State/joinPoolSlice';
+import {resetpool} from '../State/joinPoolSlice';
 import {AppAPI} from './AppAPI';
 
 export const UpcomingAPI = AppAPI.injectEndpoints({
@@ -47,6 +47,15 @@ export const UpcomingAPI = AppAPI.injectEndpoints({
       query: matchId => `home/match-squad?matchId=${matchId}`,
       transformResponse: response => response.data,
       transformErrorResponse: error => error.data,
+      async onQueryStarted(_, {dispatch, queryFulfilled}) {
+        try {
+          const {data} = await queryFulfilled;
+          dispatch(resetpool());
+          // console.log('Joinpool -->', data);
+        } catch (error) {
+          console.error('Error getting upcoming squad', error);
+        }
+      },
     }),
 
     CreateTeam: builder.mutation({
@@ -58,17 +67,43 @@ export const UpcomingAPI = AppAPI.injectEndpoints({
       invalidatesTags: ['MYTEAM'],
     }),
 
+    EditTeam: builder.mutation({
+      query: payload => ({
+        url: `home/edit-team`,
+        method: 'PATCH',
+        body: payload,
+        
+        async onQueryStarted(_, {dispatch, queryFulfilled}) {
+          try {
+            const {data} = await queryFulfilled;
+            console.log('editTeam -->', data);
+          } catch (error) {
+            console.error('Error getting upcoming squad', error);
+          }
+        },
+      }),
+      invalidatesTags: ['MYTEAM',"MYCONTESTTEAM"],
+    }),
+    DeleteTeam: builder.mutation({
+      query: payload => ({
+        url: `home/delete-team`,
+        method: 'DELETE',
+        body: payload,
+      }),
+      invalidatesTags: ['MYTEAM',"MYCONTESTTEAM"],
+    }),
+
     JoinPool: builder.mutation({
       query: payload => ({
         url: `pool/join`,
         method: 'POST',
         body: payload,
       }),
-      invalidatesTags: ['MYCONTEST', 'WALLET','ALLCONTEST','MYTEAM','USER'],
+      invalidatesTags: ['MYCONTEST', 'WALLET', 'ALLCONTEST', 'MYTEAM', 'USER'],
       async onQueryStarted(_, {dispatch, queryFulfilled}) {
         try {
           const {data} = await queryFulfilled;
-          dispatch(resetpool())
+          dispatch(resetpool());
           // console.log('Joinpool -->', data);
           showToast({
             type: 'success',
@@ -90,5 +125,7 @@ export const {
   useUpcomingMyTeamsQuery,
   useUpcomingSquadQuery,
   useCreateTeamMutation,
+  useEditTeamMutation,
+  useDeleteTeamMutation,
   useJoinPoolMutation,
 } = UpcomingAPI;

@@ -44,9 +44,10 @@ export const HomeAPI = AppAPI.injectEndpoints({
       },
     }),
     MyTeams: builder.query({
-      query: (matchId) => `/home/my-teams?matchId=${matchId}`,
+      query: matchId => `/home/my-teams?matchId=${matchId}`,
       transformResponse: response => response.data,
       transformErrorResponse: error => error.data,
+      providesTags: ['MYCONTESTTEAM'],
       async onQueryStarted(_, {dispatch, queryFulfilled}) {
         try {
           const {data} = await queryFulfilled;
@@ -57,13 +58,26 @@ export const HomeAPI = AppAPI.injectEndpoints({
       },
     }),
     MatchStats: builder.query({
-      query: (matchId) => `/home/my-match-stats?matchId=${matchId}&q=scorecard`,
+      query: matchId => `/home/my-match-stats?matchId=${matchId}&q=scorecard`,
       transformResponse: response => response.data.scorecardData,
       transformErrorResponse: error => error.data,
       async onQueryStarted(_, {dispatch, queryFulfilled}) {
         try {
           const {data} = await queryFulfilled;
           // console.log('MatchStats data ---> ', data);
+        } catch (error) {
+          console.error('Error getting MatchStats', error);
+        }
+      },
+    }),
+    MatchLeaderboard: builder.query({
+      query: poolId => `/home/my-match-stats?poolId=${poolId}&q=leaderboard`,
+      transformResponse: response => response.data.leaderboardData,
+      transformErrorResponse: error => error.data,
+      async onQueryStarted(_, {dispatch, queryFulfilled}) {
+        try {
+          const {data} = await queryFulfilled;
+          // console.log('Matchleaderboard data ---> ', data);
         } catch (error) {
           console.error('Error getting MatchStats', error);
         }
@@ -78,5 +92,6 @@ export const {
   useMymatchesQuery,
   useMycontestsQuery,
   useMyTeamsQuery,
-  useMatchStatsQuery
+  useMatchStatsQuery,
+  useMatchLeaderboardQuery,
 } = HomeAPI;

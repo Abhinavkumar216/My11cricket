@@ -1,6 +1,7 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   ImageBackground,
@@ -12,13 +13,17 @@ import {useMyTeamsQuery} from '../../../Services/API/HomeAPI';
 import EmptyState from '../../../components/EmptyState';
 import ErrorState from '../../../components/ErrorState';
 import Loading from '../../../components/Loading';
+import Animated, {FadeInDown} from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {showToast} from '../../../Services/Functions/AuthFunction';
+import {useDeleteTeamMutation} from '../../../Services/API/UpcomingAPI';
 
 const MyTeams = () => {
   const {
-    params:{matchId},
+    params: {matchId, matchStatus},
   } = useRoute();
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const {isError, error, isLoading, isSuccess, data} = useMyTeamsQuery(matchId);
 
@@ -38,7 +43,14 @@ const MyTeams = () => {
             />
           }
           showsVerticalScrollIndicator={false}
-          renderItem={({item}) => <TeamCard item={item} navigation={navigation} />}
+          renderItem={({item, index}) => (
+            <TeamCard
+              item={item}
+              index={index}
+              navigation={navigation}
+              matchStatus={matchStatus}
+            />
+          )}
         />
       </View>
     );
@@ -51,22 +63,53 @@ const MyTeams = () => {
 
 export default MyTeams;
 
-const TeamCard = ({item,navigation}) => {
+const TeamCard = ({item, navigation, index, matchStatus}) => {
+  const [CallDeleteTeam] = useDeleteTeamMutation();
+
+  const OnEditTeams = () => {
+    if (matchStatus == 'Upcoming') {
+      navigation.navigate('EditTeams', {item: item});
+    } else {
+      showToast({
+        type: 'info',
+        heading: "Can't Edit Team",
+        subheading: "Can't edit Team in Live or Completed Match",
+      });
+    }
+  };
+
+
   return (
-    <Pressable onPress={()=> navigation.navigate('Lineup', {data: item.team})}>
-      <ImageBackground
-        source={require('../../../../assets/images/playground.jpg')}
-        imageStyle={{borderRadius: 12}}
-        className="w-full h-40 justify-end rounded-xl mb-3">
-        <Captain item={item} />
-        <View className=" p-1 flex-row justify-around py-1">
-          <Stats Key={'WK'} Value={item?.teamStats.wicketBatterCount} />
-          <Stats Key={'BAT'} Value={item?.teamStats.BatsmanCount} />
-          <Stats Key={'AR'} Value={item?.teamStats.AllRounderCount} />
-          <Stats Key={'BOL'} Value={item?.teamStats.BowlerCount} />
-        </View>
-      </ImageBackground>
-    </Pressable>
+    <Animated.View entering={FadeInDown.delay(index * 200).duration(1000)}>
+      <Pressable>
+        <ImageBackground
+          source={require('../../../../assets/images/playground.jpg')}
+          imageStyle={{borderRadius: 12}}
+          className="w-full h-40 justify-end rounded-xl mb-3">
+          <View
+            style={{backgroundColor: 'rgba(0,0,0,0.4)'}}
+            className="flex-row justify-between px-5 rounded-t-xl absolute top-0 w-full py-2">
+            <Text className="font-WorksansMedium text-base text-white">
+              {item.userUid}
+            </Text>
+            <View className="flex-row">
+              <Pressable className="px-3" onPress={OnEditTeams}>
+                <Icon name="create-outline" size={21} color={'white'} />
+              </Pressable>
+            </View>
+          </View>
+          <Captain item={item} />
+          <View
+            // style={{backgroundColor: 'rgba(0,0,0,0.4)'}}
+            className=" p-1 flex-row justify-around rounded-b-xl">
+            <Stats Key={'WK'} Value={item?.teamStats.wicketBatterCount} />
+            <Stats Key={'BAT'} Value={item?.teamStats.BatsmanCount} />
+            <Stats Key={'AR'} Value={item?.teamStats.AllRounderCount} />
+            <Stats Key={'BOL'} Value={item?.teamStats.BowlerCount} />
+          </View>
+        </ImageBackground>
+      </Pressable>
+    </Animated.View>
   );
 };
 
@@ -81,37 +124,47 @@ const Stats = ({Key, Value}) => {
   );
 };
 
+const ShortName = name => {
+  if (name.length >= 12) {
+    const nameSlice = name.split(' ');
+    // console.log(name, '<<>>', nameSlice[0].charAt(0).concat(' ', nameSlice[1]));
+    return nameSlice[0].charAt(0).concat(' ', nameSlice[1]);
+  } else {
+    return name;
+  }
+};
+
 const Captain = ({item}) => {
   return (
     <View className="flex-row justify-around items-center">
-      <View className="w-20">
-        <View className="absolute z-10 p-1  w-7 h-7 items-center justify-center rounded-full -left-5 -top-5 border bg-white">
+      <View className="w-20 items-center">
+        <View className="absolute z-10 p-1  w-7 h-7 items-center justify-center rounded-full -left-2 -top-2  bg-white">
           <Text className="font-WorksansMedium text-sm text-black">C</Text>
         </View>
         <Image
           source={{uri: item?.teamStats.captain.image}}
-          className=" h-20 rounded-t-md"
+          className=" h-14 w-14 rounded-t-md"
         />
         <Text
           ellipsizeMode="tail"
           numberOfLines={1}
-          className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm">
-          {item?.teamStats.captain.name}
+          className="bg-white font-WorksansMedium text-[10px] text-black p-1 rounded-sm">
+          {ShortName(item?.teamStats.captain.name)}
         </Text>
       </View>
-      <View className="w-20">
-        <View className="absolute z-10 p-1  items-center justify-center rounded-full -left-5 -top-5 border bg-white">
+      <View className="w-20 items-center">
+        <View className="absolute z-10 p-1  items-center justify-center rounded-full -left-2 -top-2  bg-white">
           <Text className="font-WorksansMedium text-sm text-black">VC</Text>
         </View>
         <Image
           source={{uri: item?.teamStats.viceCaptain.image}}
-          className="h-20 rounded-t-md"
+          className="h-14 w-14 rounded-t-md"
         />
         <Text
           ellipsizeMode="tail"
           numberOfLines={1}
-          className="bg-white font-WorksansMedium text-xs text-black p-1  rounded-sm">
-          {item?.teamStats.viceCaptain.name}
+          className="bg-white font-WorksansMedium text-[10px] text-black p-1  rounded-sm">
+          {ShortName(item?.teamStats.viceCaptain.name)}
         </Text>
       </View>
     </View>

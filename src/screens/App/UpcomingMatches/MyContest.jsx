@@ -68,7 +68,7 @@ export const Card = ({navigation, item}) => {
             </Text>
           </View>
         </View>
-        <View className="flex-row justify-between bg-neutral-200 px-2 py-1 my-2 rounded-sm">
+        <View className="flex-row justify-between bg-amber-200 px-2 py-1 my-2 rounded-lg">
           <View className="flex-row ">
             <Text className="font-WorksansRegular text-sm text-black">
               Glory await!

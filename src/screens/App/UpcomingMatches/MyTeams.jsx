@@ -14,6 +14,7 @@ import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {
+  useDeleteTeamMutation,
   useJoinPoolMutation,
   useUpcomingMyTeamsQuery,
 } from '../../../Services/API/UpcomingAPI';
@@ -35,10 +36,6 @@ const MyTeams = () => {
   } = useRoute();
 
   const {params} = useRoute();
-
-  const route = useRoute();
-
-  // console.log('Params =>', route);
 
   const dispatch = useDispatch();
   // const joinpool = useSelector(poolState);
@@ -198,7 +195,6 @@ const TeamCard = ({
   navigation,
   index,
 }) => {
-  // const purpose = useSelector(purposeState);
   const onTeamCardClick = item => {
     if (purpose) {
       return handlePresentModalPress(item);
@@ -206,6 +202,29 @@ const TeamCard = ({
       return navigation.navigate('Lineup', {data: item.team});
     }
   };
+
+  const [CallDeleteTeam] = useDeleteTeamMutation();
+
+  const DeleteTeam = id => {
+    Alert.alert('Delete Team', 'Your Team will deleted. are you sure?', [
+      {
+        text: 'Cancel',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: 'Ok',
+        onPress: () => {
+          CallDeleteTeam({teamId: id})
+            .unwrap()
+            .then(payload => console.log('Team Created => ', payload))
+            .catch(error => console.error('Team Create Error => ', error))
+            // .finally(() => navigation.pop());
+        },
+      },
+    ]);
+  };
+  // console.log('MyTeams =>',item)
   return (
     <Animated.View entering={FadeInRight.delay(index * 200).duration(1000)}>
       <Pressable onPress={() => onTeamCardClick(item)}>
@@ -219,16 +238,16 @@ const TeamCard = ({
             <Text className="font-WorksansMedium text-base text-white">
               {item.userUid}
             </Text>
-            <View className='flex-row'>
-
-            <Pressable className="px-3">
-              <Icon name="create-outline" size={21} color={'white'} />
-            </Pressable>
-            <Pressable className=" px-3">
-              <Icon name="trash-outline" size={21} color={'red'} />
-            </Pressable>
+            <View className="flex-row">
+              <Pressable
+                className="px-3"
+                onPress={() => navigation.navigate('EditTeams', {item: item})}>
+                <Icon name="create-outline" size={21} color={'white'} />
+              </Pressable>
+              <Pressable className=" px-3" onPress={() => DeleteTeam(item._id)}>
+                <Icon name="trash-outline" size={21} color={'red'} />
+              </Pressable>
             </View>
-
           </View>
           <Captain item={item} />
           <View
@@ -256,39 +275,49 @@ const Stats = ({Key, Value}) => {
   );
 };
 
+const ShortName = name => {
+  if (name.length >= 12) {
+    const nameSlice = name.split(' ');
+    // console.log(name, '<<>>', nameSlice[0].charAt(0).concat(' ', nameSlice[1]));
+    return nameSlice[0].charAt(0).concat(' ', nameSlice[1]);
+  } else {
+    return name;
+  }
+};
+
 const Captain = ({item}) => {
   return (
     <View className="flex-row justify-around items-center">
-      <View className="w-14">
+      <View className="w-20 items-center">
         <View className="absolute z-10 p-1  w-7 h-7 items-center justify-center rounded-full -left-2 -top-2 bg-white">
           <Text className="font-WorksansMedium text-sm text-black">C</Text>
         </View>
         <Image
           source={{uri: item?.teamStats.captain.image}}
-          className=" h-14 rounded-t-md"
+          className=" h-14 w-14 rounded-t-md"
           resizeMode="contain"
         />
         <Text
           ellipsizeMode="tail"
           numberOfLines={1}
-          className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm">
-          {item?.teamStats.captain.name}
+          className="bg-white font-WorksansMedium text-[10px] text-black p-1 rounded-sm">
+          {ShortName(item?.teamStats.captain.name)}
         </Text>
       </View>
-      <View className="w-14">
+      <View className="w-20 items-center">
         <View className="absolute z-10 p-1  items-center justify-center rounded-full -left-2 -top-2 bg-white">
           <Text className="font-WorksansMedium text-sm text-black">VC</Text>
         </View>
         <Image
           source={{uri: item?.teamStats.viceCaptain.image}}
-          className="h-14 rounded-t-md"
+          className="h-14 w-14 rounded-t-md"
           resizeMode="contain"
         />
         <Text
           ellipsizeMode="tail"
           numberOfLines={1}
-          className="bg-white font-WorksansMedium text-xs text-black p-1  rounded-sm">
-          {item?.teamStats.viceCaptain.name}
+          className="bg-white font-WorksansMedium text-[10px] text-black p-1  rounded-sm">
+          {ShortName(item?.teamStats.viceCaptain.name)}
         </Text>
       </View>
     </View>

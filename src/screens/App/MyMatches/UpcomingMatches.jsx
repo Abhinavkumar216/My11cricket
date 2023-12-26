@@ -69,19 +69,19 @@ export const Card = ({navigation, item}) => {
       onPress={() => navigation.navigate('Details', {item})}
       className="flex-1 ">
       <View className="border rounded-xl border-gray-300 mx-3 mt-3 bg-white">
-        <View className="bg-gray-200 rounded-t-xl p-1 px-2 py-2">
+        <View className="bg-green-200 rounded-t-xl p-1 px-2 py-1">
           <Text className="text-black font-WorksansRegular">
             {item.match.seriesName}
           </Text>
         </View>
-        <View className="flex-row px-3 pt-3">
+        <View className="flex-row px-3 pt-2">
           <Competitor1 team={item?.match?.team1} />
           <Status matchStatus={item.matchStatus} time={item.match.startDate} />
           <Competitor2 team={item?.match?.team2} />
         </View>
         <View className="border-t my-2  border-gray-200" />
         <View className="flex-row px-3 pb-3">
-          <Text className="font-WorksansRegular text-gray-600">
+          <Text className="font-WorksansRegular text-gray-600 text-xs">
             {item.totalTeams} Team {item.totalContestsJoined} Contest
           </Text>
         </View>
@@ -97,17 +97,17 @@ const Competitor1 = ({team}) => {
         {team?.imageLink && (
           <Image
             source={{uri: team?.imageLink}}
-            className="w-14 h-14 mr-1"
+            className="w-10 h-10 mr-1 rounded-full"
             resizeMode="contain"
           />
         )}
-        <Text className="text-xl font-WorksansSemiBold text-black">
+        <Text className="text-lg font-WorksansSemiBold text-black">
           {team?.teamSName}
         </Text>
       </View>
       <Text
         ellipsizeMode="tail"
-        className="text-sm font-WorksansRegular text-black ">
+        className="text-xs font-WorksansRegular text-black ">
         {team?.teamName.slice(0, 15)}
       </Text>
     </View>
@@ -130,21 +130,21 @@ export const Status = ({matchStatus, time}) => {
 const Competitor2 = ({team}) => {
   return (
     <View>
-      <View className="flex-row items-center">
-        <Text className="text-xl font-WorksansSemiBold text-black">
+      <View className="flex-row items-center justify-end">
+        <Text className="text-lg font-WorksansSemiBold text-black">
           {team?.teamSName}
         </Text>
         {team?.imageLink && (
           <Image
             source={{uri: team?.imageLink}}
-            className="w-14 h-14 ml-1"
+            className="w-10 h-10 ml-1 rounded-full"
             resizeMode="contain"
           />
         )}
       </View>
       <Text
         ellipsizeMode="tail"
-        className="text-sm font-WorksansRegular text-black  text-right ">
+        className="text-xs font-WorksansRegular text-black  text-right ">
         {team?.teamName.slice(0, 15)}
       </Text>
     </View>

@@ -63,8 +63,8 @@ const Home = () => {
               <Corousal Data={data?.carousalItems} />
               {/* Upcoming Matches */}
               <View className="  justify-between">
-                <Text className="font-WorksansMedium text-xl text-black ml-3">
-                  Upcoming Matches
+                <Text className="font-WorksansSemiBold text-xl text-black ml-3">
+                  Upcoming <Text className="font-WorksansRegular text-xl text-black ml-3">Matches</Text> 
                 </Text>
               </View>
             </>

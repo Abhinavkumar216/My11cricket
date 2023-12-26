@@ -5,23 +5,55 @@ import {
   Image,
   ScrollView,
   Pressable,
+  FlatList,
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {useMatchLeaderboardQuery} from '../../../Services/API/HomeAPI';
+import Loading from '../../../components/Loading';
+import ErrorState from '../../../components/ErrorState';
+import EmptyState from '../../../components/EmptyState';
 
 const Leaderboard = () => {
   const navigation = useNavigation();
-  return (
-    <View className="flex-1 bg-gray-100">
-      {/* <View className="border p-3 m-3 rounded-lg border-gray-300 bg-white ">
-        <Top />
-        <Competitiors />
-        <Ranking navigation={navigation} />
-      </View> */}
-    </View>
-  );
+  const {
+    params: {matchId},
+  } = useRoute();
+  const {isError, isLoading, isSuccess, data, error} =
+    useMatchLeaderboardQuery(matchId);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isSuccess) {
+    return (
+      <View className="flex-1 bg-gray-100">
+        <FlatList
+          data={data}
+          ListEmptyComponent={
+            <EmptyState
+              title={'Leaderboard not abailable'}
+              subtitle={'Please visit after some time!!!'}
+            />
+          }
+          renderItem={() => {
+            return (
+              <View className="border p-3 m-3 rounded-lg border-gray-300 bg-white ">
+                <Top />
+                <Competitiors />
+                <Ranking navigation={navigation} />
+              </View>
+            );
+          }}
+        />
+      </View>
+    );
+  }
+  if (isError) {
+    return <ErrorState error={error} />;
+  }
 };
 
 export default Leaderboard;

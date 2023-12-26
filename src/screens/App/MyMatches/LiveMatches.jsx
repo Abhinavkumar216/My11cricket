@@ -63,7 +63,7 @@ export const Card = ({navigation, item}) => {
       onPress={() => navigation.navigate('Details', {item})}
       className="flex-1 ">
       <View className="border rounded-xl border-gray-300 mx-3 mt-3 bg-white">
-        <View className="bg-gray-200 rounded-t-xl p-1 px-2 py-2">
+        <View className="bg-green-200 rounded-t-xl p-1 px-2 py-2">
           <Text className="text-black font-WorksansRegular">
             {item.match.seriesName}
           </Text>
@@ -91,17 +91,17 @@ const Competitor1 = ({team}) => {
         {team?.imageLink && (
           <Image
             source={{uri: team?.imageLink}}
-            className="w-14 h-14 mr-1"
+            className="w-10 h-10 mr-1 rounded-full"
             resizeMode="contain"
           />
         )}
-        <Text className="text-xl font-WorksansSemiBold text-black">
+        <Text className="text-base font-WorksansSemiBold text-black">
           {team?.teamSName}
         </Text>
       </View>
       <Text
         ellipsizeMode="tail"
-        className="text-sm font-WorksansRegular text-black ">
+        className="text-xs font-WorksansRegular text-black ">
         {team?.teamName.slice(0, 15)}
       </Text>
     </View>
@@ -111,7 +111,7 @@ const Competitor1 = ({team}) => {
 export const Status = ({matchStatus, time}) => {
   return (
     <View className="flex-1 self-center items-center">
-      <Text className="text-base font-WorksansMedium text-green-600 ml-2">
+      <Text className="text-sm font-WorksansMedium text-green-600 ml-2">
         {matchStatus}
       </Text>
       <Text className="text-xs font-WorksansMedium text-black ml-2">
@@ -125,20 +125,20 @@ const Competitor2 = ({team}) => {
   return (
     <View>
       <View className="flex-row items-center">
-        <Text className="text-xl font-WorksansSemiBold text-black">
+        <Text className="text-lg font-WorksansSemiBold text-black">
           {team?.teamSName}
         </Text>
         {team?.imageLink && (
           <Image
             source={{uri: team?.imageLink}}
-            className="w-14 h-14 ml-1"
+            className="w-10 h-10 ml-1 rounded-full"
             resizeMode="contain"
           />
         )}
       </View>
       <Text
         ellipsizeMode="tail"
-        className="text-sm font-WorksansRegular text-black  text-right ">
+        className="text-xs font-WorksansRegular text-black  text-right ">
         {team?.teamName.slice(0, 15)}
       </Text>
     </View>

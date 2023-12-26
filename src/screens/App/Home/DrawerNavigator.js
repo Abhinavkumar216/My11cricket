@@ -122,7 +122,7 @@ const CustomDrawer = props => {
         // style={{marginTop: 25}}
       />
       <DrawerItem
-        label="Rules"
+        label="Point System"
         icon={() => <Image source={require('../../../../assets/icons/book.png')} style={{width:28, height:28}}/>}
         labelStyle={styles.Items}
         onPress={() =>  props.navigation.navigate('Rules')}

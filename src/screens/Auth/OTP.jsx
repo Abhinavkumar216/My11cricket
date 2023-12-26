@@ -1,10 +1,10 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, StatusBar, Image} from 'react-native';
 import React, {useState, useContext} from 'react';
 import OtpInputs from 'react-native-otp-inputs';
 import ButtonFull from '../../components/ButtonFull';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {AuthContext} from '../../Services/AuthContext';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import Animated, {FadeInDown} from 'react-native-reanimated';
 
 const OTP = () => {
   const navigation = useNavigation();
@@ -31,9 +31,21 @@ const OTP = () => {
 
   return (
     <View className="flex-1">
-      <Animated.View  entering={FadeInDown.delay(200).duration(1000)} className="mt-10">
+      <StatusBar animated barStyle={'dark-content'} />
+      <View className=" items-center my-16">
+        <Image
+          source={require('../../../assets/icons/round.png')}
+          className="h-32 w-32"
+        />
+        <Text className="font-WorksansSemiBold text-4xl text-black">
+          My11Cricket
+        </Text>
+      </View>
+      <Animated.View
+        entering={FadeInDown.delay(200).duration(1000)}
+        className="mt-10">
         <Text className="font-WorksansRegular text-lg mx-5 mb-3 text-black">
-         {` Enter OTP Sent to mobile\n +91 ${routes.params?.mobile}`}
+          {` Enter OTP Sent to mobile\n +91 ${routes.params?.mobile}`}
         </Text>
         <OtpInputs
           clearTextOnFocus
@@ -50,7 +62,7 @@ const OTP = () => {
             paddingHorizontal: 12,
             margin: 4,
             backgroundColor: '#ddd',
-            borderRadius:5
+            borderRadius: 5,
           }}
           autoFocus
           inputStyles={{fontSize: 26, textAlign: 'center', color: '#181928'}}

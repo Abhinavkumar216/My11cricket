@@ -111,12 +111,12 @@ const Rules = () => {
                 <Icon name="caret-down-outline" size={21} color={'#181928'} />
               </View>
               <TopSection />
-              <PontSystem data={BattingData} title={'Batting'} />
-              <PontSystem data={BowlingData} title={'Bowling'} />
-              <PontSystem data={FeildingData} title={'Fielding'} />
-              <PontSystem data={OtherData} title={'Other'} />
-              <PontSystem data={EPS} title={'Economy Point System'} />
-              <PontSystem data={STP} title={'Strike Rate Points'} />
+              <PontSystem data={BattingData} title={'Batting Points'} />
+              <PontSystem data={BowlingData} title={'Bowling Points'} />
+              <PontSystem data={FeildingData} title={'Fielding Points'} />
+              <PontSystem data={EPS} title={'Economy Point '} />
+              <PontSystem data={STP} title={'Strike Rate '} />
+              <PontSystem data={OtherData} title={'Other Points'} />
             </>
           );
         }}
@@ -188,7 +188,6 @@ const TopSection = () => {
 // Economy points system ( minimum 3 overs bowled )
 // ---------------------
 
-
 // Below 3 rpo => 6
 // 3 - 4 rpo => 4
 // 4 - 5 rpo  => 3
@@ -196,8 +195,6 @@ const TopSection = () => {
 
 // Strike Rate points system ( minimum 12 balls played )
 // -------------------------
-
-
 
 // above 140  => 6
 // 120  - 140  => 4

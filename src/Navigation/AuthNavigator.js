@@ -12,21 +12,18 @@ const AuthNavigator = () => {
     <Stack.Navigator
       initialRouteName="GetStarted"
       screenOptions={{
+        headerShown: false,
         headerStyle: {backgroundColor: '#181928'},
         headerTintColor: '#fff',
         headerTitleStyle: {
           fontFamily: 'WorkSans-Medium',
-          fontSize:18,
+          fontSize: 18,
         },
         animation: 'slide_from_right',
-        animationDuration:500,
-        animationTypeForReplace:'push'
+        animationDuration: 500,
+        animationTypeForReplace: 'push',
       }}>
-      <Stack.Screen
-        name="GetStarted"
-        component={GetStarted}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name="GetStarted" component={GetStarted} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="OTP" component={OTP} />

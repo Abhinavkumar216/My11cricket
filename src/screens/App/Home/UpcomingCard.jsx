@@ -4,18 +4,17 @@ import React from 'react';
 import {Image, ImageBackground, Pressable, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CountdownTimer from '../../../components/Countdown';
-import Animated, {FadeInDown} from 'react-native-reanimated';
+
 
 const UpcomingCard = ({item}) => {
   const navigation = useNavigation();
-  // console.log(item);
 
   return (
     <LinearGradient
-    start={{x:1,y:0}}
-    end={{x:0,y:0}}
+      start={{x: 1, y: 0}}
+      end={{x: 0, y: 0}}
       colors={['rgba(229, 86, 4, 0.1)', '#ffffff50']}
-      className=" mx-3 mt-4 border rounded-xl border-zinc-200 bg-white">
+      className=" mx-3 mt-2 border rounded-xl border-zinc-200 bg-white">
       <Pressable
         onPress={() =>
           navigation.navigate('UpcomingMatches', {
@@ -30,13 +29,13 @@ const UpcomingCard = ({item}) => {
           <Text
             ellipsizeMode="tail"
             numberOfLines={1}
-            className="font-WorksansMedium text-sm flex-1 text-black">
+            className="font-WorksansRegular text-xs flex-1 text-black">
             {item?.seriesName}
           </Text>
           <Text
             ellipsizeMode="tail"
-            className="font-WorksansMediumtext-right text-zinc-500">
-            # {item?.matchDesc}
+            className="font-WorksansMedium text-right text-amber-600 text-xs">
+            {item?.matchDesc}
           </Text>
         </View>
         <View className="flex-row px-3 py-1">
@@ -50,10 +49,13 @@ const UpcomingCard = ({item}) => {
           colors={['rgba(229, 86, 4, 0.9)', '#ffffff00']}
           start={{x: 0, y: 0}}
           end={{x: 0.7, y: 0}}
-          className="w-5/5 rounded-l-xl px-3 mx-3 mb-1 py-1">
-          <Text className="font-WorksansSemiBold text-white w-2/3">
+          className="w-5/5 rounded-l-xl px-3 mx-3 mb-1 py-1 flex-row justify-between">
+          <Text className="font-WorksansSemiBold text-white w-2/3 text-xs">
             MEGA {item?.megaPrize}
           </Text>
+          {item?.isLineupOut && <Text className="font-WorksansSemiBold text-green-600 text-xs">
+            Lineup Out
+          </Text>}
         </LinearGradient>
       </Pressable>
     </LinearGradient>
@@ -69,7 +71,7 @@ const Competitor1 = ({team1}) => {
         {team1?.imageLink && (
           <Image
             source={{uri: team1?.imageLink}}
-            className="w-14 h-14 mr-1 rounded-full"
+            className="w-10 h-10 mr-1 rounded-full"
             resizeMode="contain"
           />
         )}
@@ -79,7 +81,7 @@ const Competitor1 = ({team1}) => {
       </View>
       <Text
         ellipsizeMode="tail"
-        className="text-sm font-WorksansRegular text-black ">
+        className="text-xs font-WorksansRegular text-black ">
         {team1?.teamName.slice(0, 15)}
       </Text>
     </View>
@@ -107,14 +109,14 @@ const Competitor2 = ({team2}) => {
         {team2?.imageLink && (
           <Image
             source={{uri: team2?.imageLink}}
-            className="w-14 h-14 ml-1 rounded-full"
+            className="w-10 h-10 ml-1 rounded-full"
             resizeMode="contain"
           />
         )}
       </View>
       <Text
         ellipsizeMode="tail"
-        className="text-sm font-WorksansRegular text-black text-right">
+        className="text-xs font-WorksansRegular text-black text-right">
         {team2?.teamName.slice(0, 15)}
       </Text>
     </View>

@@ -1,9 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useState, useContext} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import {Image, Pressable, StatusBar, Text, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import ButtonFull from '../../components/ButtonFull';
 import {AuthContext} from '../../Services/AuthContext';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Animated, {FadeInDown} from 'react-native-reanimated';
 
 const Register = () => {
@@ -16,6 +17,16 @@ const Register = () => {
   const theme = {colors: {primary: '#181928'}};
   return (
     <View className="flex-1 pt-5 bg-neutral-100">
+      <StatusBar animated barStyle={'dark-content'} />
+      <View className=" items-center my-16">
+        <Image
+          source={require('../../../assets/icons/round.png')}
+          className="h-32 w-32"
+        />
+        <Text className="font-WorksansSemiBold text-4xl text-black">
+          My11Cricket
+        </Text>
+      </View>
       <Animated.View entering={FadeInDown.delay(100).duration(1000)}>
         <TextInput
           mode="outlined"
@@ -26,7 +37,7 @@ const Register = () => {
           theme={theme}
           dataDetectorTypes={'none'}
           style={{
-            width: '90%',
+            width: '92%',
             alignSelf: 'center',
             marginTop: 10,
             backgroundColor: '#fff',
@@ -43,7 +54,7 @@ const Register = () => {
           theme={theme}
           dataDetectorTypes={'phoneNumber'}
           style={{
-            width: '90%',
+            width: '92%',
             alignSelf: 'center',
             marginTop: 10,
             backgroundColor: '#fff',
@@ -59,10 +70,11 @@ const Register = () => {
           onChangeText={setMobile}
           keyboardType="phone-pad"
           theme={theme}
+          left={<TextInput.Affix text="+91" textStyle={{color: '#000', fontFamily:"WorkSans-Medium"}} />}
           editable={!isLoading}
           dataDetectorTypes={'phoneNumber'}
           style={{
-            width: '90%',
+            width: '92%',
             alignSelf: 'center',
             marginTop: 10,
             backgroundColor: '#fff',
@@ -77,7 +89,7 @@ const Register = () => {
       </Animated.Text>
       <Animated.View entering={FadeInDown.delay(500).duration(1000)}>
         <ButtonFull
-          title={'REGISTER'}
+          title={'Next'}
           buttonStyle={'mt-5'}
           textStyle={'text-white'}
           disabled={isLoading || Mobile?.length < 10}

@@ -47,7 +47,7 @@ const CompletedDetails = ({navigation}) => {
             <Competition2 data={data.inningsTwo} />
           </View>
 
-          <View className="items-center mt-5 mb-2">
+          <View className="items-center mt-1 mb-2">
             <View className="flex-row items-center">
               <View className="w-2 h-2 bg-green-600 rounded-full mr-2" />
               <Text className="text-white font-WorksansSemiBold">
@@ -70,13 +70,13 @@ const Competition1 = ({data}) => {
   // console.log('item ==>', data)
   return (
     <View>
-      <Text className="text-white font-WorksansMedium">
+      <Text className="text-white font-WorksansMedium mb-2">
         {data?.batTeamName}
       </Text>
       <View className="flex-row items-center">
         <Image
           source={{uri: data?.image}}
-          className="w-10 h-10 mr-3"
+          className="w-14 h-14 mr-3 rounded-full"
           resizeMode="contain"
         />
         {data?.scoreDetails?.runs && (
@@ -97,7 +97,7 @@ const Competition1 = ({data}) => {
 const Competition2 = ({data}) => {
   return (
     <View>
-      <Text className="text-white text-right font-WorksansMedium">
+      <Text className="text-white text-right font-WorksansMedium mb-2">
         {data?.batTeamName}
       </Text>
       <View className="flex-row items-center">
@@ -114,7 +114,7 @@ const Competition2 = ({data}) => {
         <Image
           resizeMode="contain"
           source={{uri: data?.image}}
-          className="w-10 h-10 ml-3"
+          className="w-14 h-14 ml-3 rounded-full"
         />
       </View>
     </View>

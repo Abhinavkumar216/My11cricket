@@ -1,57 +1,68 @@
 import {Image, Pressable, StyleSheet, Text, View, FlatList} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {useMatchLeaderboardQuery} from '../../../Services/API/HomeAPI';
+import Loading from '../../../components/Loading';
+import ErrorState from '../../../components/ErrorState';
 
 const LeaderboardPanel = ({navigation}) => {
-  return (
-    <View className="bg-white flex-1 mt-16 rounded-xl">
-      <Header />
-      <TopCard />
-      <FlatList
-        data={[1, 2, 3]}
-        ItemSeparatorComponent={<Saperator />}
-        renderItem={() => <RemainingCard />}
-      />
-    </View>
-  );
+  const {
+    params: {Id, type},
+  } = useRoute();
+
+  // console.log(type);
+
+  const {isError, isLoading, isSuccess, data, error} =
+    useMatchLeaderboardQuery(Id);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isSuccess) {
+    // console.log("Loaderboard Panel =>", data)
+    return (
+      <View className="bg-white flex-1 mt-10 rounded-2xl">
+        <Header type={type} />
+        <TopCard data={data} />
+        <FlatList
+          data={data.slice(3)}
+          ItemSeparatorComponent={<Saperator />}
+          renderItem={({item}) => <RemainingCard item={item} />}
+        />
+      </View>
+    );
+  }
+
+  if (isError) {
+    return <ErrorState error={error} />;
+  }
 };
 
 export default LeaderboardPanel;
 
-const Header = () => {
+const Header = ({type}) => {
   const navigation = useNavigation();
   return (
-    <View className="flex-row items-center  py-2 my-2 ">
+    <View className="flex-row items-center  py-2 rounded-2xl">
       <Pressable onPress={() => navigation.pop()} className=" p-1 ml-2">
         <Icon name="arrow-back-outline" size={26} color={'#181928'} />
       </Pressable>
       <View className="justify-center items-center flex-1 flex-row">
-        <Image
-          source={require('../../../../assets/images/india.png')}
-          className="h-10 w-10"
-        />
-        <View className="justify-center items-center px-3">
-          <Text className="font-WorksansSemiBold text-lg">IND vs PAK</Text>
-          <Text className="font-WorksansRegular text-sm">
-            win  12,000 | 23 Jul
-          </Text>
-        </View>
-        <Image
-          source={require('../../../../assets/images/pak.png')}
-          className="h-10 w-10"
-        />
+        <Text className="font-WorksansSemiBold text-lg -ml-7">{type}</Text>
       </View>
     </View>
   );
 };
 
-const TopPoints = () => {
+const TopPoints = ({data}) => {
   return (
     <View className="items-center mt-3">
-      <Text className="font-WorksansMedium">Henrietta H.</Text>
-      <Text className="font-semibold text-xl text-gray-900">800</Text>
-      <Text className="font-WorksansMedium">270pts</Text>
+      <Text className="font-WorksansMedium">{data?.userUid}</Text>
+      <Text className="font-semibold text-xl text-gray-900">{data?.score}</Text>
+      <Text className="font-WorksansMedium text-base text-black ">
+        {data?.winnings}
+      </Text>
     </View>
   );
 };
@@ -64,50 +75,58 @@ const TopRank = ({rank}) => {
   );
 };
 
-const TopCard = () => {
+const TopCard = ({data}) => {
   return (
     <View className="flex-row justify-evenly items-end  py-3">
-      <View>
-        <View className="justify-center items-center">
-          <Image
-            source={require('../../../../assets/images/profile.jpg')}
-            className="h-20 w-20 rounded-full"
-          />
-          <TopRank rank={2} />
+      {data[1] && (
+        <View>
+          <View className="justify-center items-center">
+            <Image
+              source={require('../../../../assets/images/profile.jpg')}
+              className="h-20 w-20 rounded-full"
+            />
+            <TopRank rank={data[1]?.ranking} />
+          </View>
+          <TopPoints data={data[1]} />
         </View>
-        <TopPoints />
-      </View>
+      )}
 
-      <View>
-        <View className="justify-center items-center">
-          <Image
-            source={require('../../../../assets/images/profile.jpg')}
-            className="h-24 w-24 rounded-full"
-          />
-          <TopRank rank={1} />
+      {data[0] && (
+        <View>
+          <View className="justify-center items-center">
+            <Image
+              source={require('../../../../assets/images/profile.jpg')}
+              className="h-24 w-24 rounded-full"
+            />
+            <TopRank rank={data[0]?.ranking} />
+          </View>
+          <TopPoints data={data[0]} />
         </View>
-        <TopPoints />
-      </View>
+      )}
 
-      <View>
-        <View className="justify-center items-center">
-          <Image
-            source={require('../../../../assets/images/profile.jpg')}
-            className="h-20 w-20 rounded-full"
-          />
-          <TopRank rank={3} />
+      {data[2] && (
+        <View>
+          <View className="justify-center items-center">
+            <Image
+              source={require('../../../../assets/images/profile.jpg')}
+              className="h-20 w-20 rounded-full"
+            />
+            <TopRank rank={data[2]?.ranking} />
+          </View>
+          <TopPoints data={data[2]} />
         </View>
-        <TopPoints />
-      </View>
+      )}
     </View>
   );
 };
 
-const RemainingCard = () => {
+const RemainingCard = ({item}) => {
   return (
     <View className="flex-row items-center justify-between mx-2 py-4 px-4  bg-white">
       <View>
-        <Text className="font-WorksansSemiBold text-2xl text-black">8</Text>
+        <Text className="font-WorksansSemiBold text-2xl text-black">
+          {item.ranking}
+        </Text>
       </View>
       <View className="flex-1 ml-3 flex-row">
         <Image
@@ -118,11 +137,13 @@ const RemainingCard = () => {
           <Text className="font-WorksansSemiBold text-xl text-neutral-700">
             You
           </Text>
-          <Text className="font-WorksansRegular">130pts | Team 2</Text>
+          <Text className="font-WorksansRegular">{item.winnings}</Text>
         </View>
       </View>
       <View>
-        <Text className="font-WorksansMedium text-xl text-gray-900"> 110</Text>
+        <Text className="font-WorksansMedium text-xl text-gray-900">
+          {item.score}
+        </Text>
       </View>
     </View>
   );
