@@ -27,6 +27,7 @@ import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import ButtonFull from '../../../components/ButtonFull';
 import Animated, {FadeInRight} from 'react-native-reanimated';
+import {showToast} from '../../../Services/Functions/AuthFunction';
 
 const MyTeams = () => {
   const navigation = useNavigation();
@@ -203,7 +204,37 @@ const TeamCard = ({
     }
   };
 
-  // console.log('MyTeams =>',item)
+  const [CallDeleteTeam] = useDeleteTeamMutation();
+
+  const DeleteTeam = id => {
+    if (item.poolIds.length) {
+      showToast({
+        type: 'info',
+        heading: "Can't delete Team",
+        subheading: 'You joined a contest with this team.',
+      });
+      return;
+    }
+    Alert.alert('Delete Team', 'Your Team will deleted. are you sure?', [
+      {
+        text: 'Cancel',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: 'Ok',
+        onPress: () => {
+          CallDeleteTeam({teamId: id})
+            .unwrap()
+            .then(payload => console.log('Team Created => ', payload))
+            .catch(error => console.error('Team Create Error => ', error));
+          // .finally(() => navigation.pop());
+        },
+      },
+    ]);
+  };
+
+  console.log('MyTeams =>', item);
   return (
     <Animated.View entering={FadeInRight.delay(index * 200).duration(1000)}>
       <Pressable onPress={() => onTeamCardClick(item)}>
@@ -222,6 +253,9 @@ const TeamCard = ({
                 className="px-3"
                 onPress={() => navigation.navigate('EditTeams', {item: item})}>
                 <Icon name="create-outline" size={21} color={'white'} />
+              </Pressable>
+              <Pressable className=" px-3" onPress={() => DeleteTeam(item._id)}>
+                <Icon name="trash-outline" size={21} color={'red'} />
               </Pressable>
             </View>
           </View>
