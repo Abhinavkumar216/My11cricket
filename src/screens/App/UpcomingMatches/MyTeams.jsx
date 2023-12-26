@@ -234,7 +234,6 @@ const TeamCard = ({
     ]);
   };
 
-  console.log('MyTeams =>', item);
   return (
     <Animated.View entering={FadeInRight.delay(index * 200).duration(1000)}>
       <Pressable onPress={() => onTeamCardClick(item)}>
