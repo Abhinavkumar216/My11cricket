@@ -203,27 +203,6 @@ const TeamCard = ({
     }
   };
 
-  const [CallDeleteTeam] = useDeleteTeamMutation();
-
-  const DeleteTeam = id => {
-    Alert.alert('Delete Team', 'Your Team will deleted. are you sure?', [
-      {
-        text: 'Cancel',
-        onPress: () => null,
-        style: 'cancel',
-      },
-      {
-        text: 'Ok',
-        onPress: () => {
-          CallDeleteTeam({teamId: id})
-            .unwrap()
-            .then(payload => console.log('Team Created => ', payload))
-            .catch(error => console.error('Team Create Error => ', error))
-            // .finally(() => navigation.pop());
-        },
-      },
-    ]);
-  };
   // console.log('MyTeams =>',item)
   return (
     <Animated.View entering={FadeInRight.delay(index * 200).duration(1000)}>
@@ -243,9 +222,6 @@ const TeamCard = ({
                 className="px-3"
                 onPress={() => navigation.navigate('EditTeams', {item: item})}>
                 <Icon name="create-outline" size={21} color={'white'} />
-              </Pressable>
-              <Pressable className=" px-3" onPress={() => DeleteTeam(item._id)}>
-                <Icon name="trash-outline" size={21} color={'red'} />
               </Pressable>
             </View>
           </View>

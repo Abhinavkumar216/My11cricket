@@ -37,7 +37,11 @@ const MyContest = () => {
           }
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => (
-            <SpotCard navigation={navigation} item={item} />
+            <SpotCard
+              navigation={navigation}
+              matchStatus={matchStatus}
+              item={item}
+            />
           )}
         />
       </View>
@@ -47,11 +51,14 @@ const MyContest = () => {
 
 export default MyContest;
 
-const SpotCard = ({item, navigation}) => {
+const SpotCard = ({item, navigation, matchStatus}) => {
   // console.log('Item => ', item);
   return (
     <Pressable
-      onPress={() => navigation.push('LeaderboardPanel', {Id: item._id,type:item.type})}
+      disabled={matchStatus !== 'Completed'}
+      onPress={() =>
+        navigation.push('LeaderboardPanel', {Id: item._id, type: item.type})
+      }
       className="border border-neutral-400 rounded-xl mx-2 mt-3 bg-white">
       <View className="pt-2 px-3 flex-row justify-between ">
         <Text className="font-WorksansMedium text-base text-black">

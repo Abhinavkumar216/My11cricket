@@ -63,9 +63,17 @@ const Lineup = () => {
 export default Lineup;
 
 const PlayerCard = ({item}) => {
-  const nameSlice = item.name.split(' ');
 
-  const ShortName = nameSlice[0].charAt(0).concat(' ', nameSlice[1]);
+  const ShortName = name => {
+    if (name.length >= 12) {
+      const nameSlice = name.split(' ');
+      // console.log(name, '<<>>', nameSlice[0].charAt(0).concat(' ', nameSlice[1]));
+      return nameSlice[0].charAt(0).concat(' ', nameSlice[1]);
+    } else {
+      return name;
+    }
+  };
+
   return (
     <View className="m-3 items-center overflow-visible">
       {item.isCaptain && (
@@ -88,8 +96,8 @@ const PlayerCard = ({item}) => {
       <Text
         ellipsizeMode="tail"
         numberOfLines={1}
-        className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm w-14 ">
-        {ShortName}
+        className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm ">
+        {ShortName(item.name)}
       </Text>
       {/* <Text className="bg-[#181928] text-center font-WorksansMedium text-xs text-white p-1 rounded-sm">
         {item.role}

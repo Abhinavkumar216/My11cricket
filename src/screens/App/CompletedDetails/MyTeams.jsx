@@ -64,7 +64,7 @@ const MyTeams = () => {
 export default MyTeams;
 
 const TeamCard = ({item, navigation, index, matchStatus}) => {
-  const [CallDeleteTeam] = useDeleteTeamMutation();
+  // const [CallDeleteTeam] = useDeleteTeamMutation();
 
   const OnEditTeams = () => {
     if (matchStatus == 'Upcoming') {
@@ -78,10 +78,9 @@ const TeamCard = ({item, navigation, index, matchStatus}) => {
     }
   };
 
-
   return (
     <Animated.View entering={FadeInDown.delay(index * 200).duration(1000)}>
-      <Pressable>
+      <Pressable onPress={()=> navigation.navigate('Lineup', {data: item.team})}>
         <ImageBackground
           source={require('../../../../assets/images/playground.jpg')}
           imageStyle={{borderRadius: 12}}
