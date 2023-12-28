@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "762603849201",
+    "project_id": "my11cricket-69ae7",
+    "storage_bucket": "my11cricket-69ae7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762603849201:android:50b6406ec75cbbde1ff050",
+        "android_client_info": {
+          "package_name": "com.my11cricket"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG-imBYW_RzhfudhZaMqTQfO7cslciAek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
