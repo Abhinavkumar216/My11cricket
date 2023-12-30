@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, TouchableOpacity, Text} from 'react-native';
 import notifee from '@notifee/react-native';
 import Confirmation from '../../../components/Confirmation';
+
 
 const Notification = () => {
   const notificationConfig = async (type, channelId) => {
@@ -49,12 +50,11 @@ const Notification = () => {
       badge:true,
       sound:'default',
     });
-    notificationConfig('largeIcon', channelId);
+    notificationConfig('smallIcon', channelId);
   }
 
   return (
     <View className='flex-1'>
-      <Confirmation/>
     </View>
   );
 };

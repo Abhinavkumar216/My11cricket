@@ -1,23 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Image, Linking, Pressable, StyleSheet, Text, View} from 'react-native';
 import ButtonFull from '../../../components/ButtonFull';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
+import CodePush from 'react-native-code-push';
 
 const Permission = ({navigation}) => {
-  const {params:{Screen}} = useRoute()
+  const {
+    params: {Screen},
+  } = useRoute();
   if (Screen === 'Update') {
     return (
-      <View
-        className=" flex-1 justify-end bg-transparent" >
+      <View className=" flex-1 justify-end bg-transparent">
         <Update navigation={navigation} />
       </View>
     );
   }
   if (Screen === 'Notification') {
     return (
-      <View
-        className=" flex-1 justify-end bg-transparent">
+      <View className=" flex-1 justify-end bg-transparent">
         <NotificationPermission navigation={navigation} />
       </View>
     );

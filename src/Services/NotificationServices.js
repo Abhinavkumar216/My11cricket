@@ -7,21 +7,17 @@ import NavigationServices from './NavigationServices';
 // import NavigationServices from '../navigation/NavigationServices';
 
 export const GetPermission = async () => {
-  if (Platform.OS === 'android') {
-    try {
-      const permissions = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-      );
-      if (!!permissions && permissions == 'granted') {
-        console.log('Permission granted', permissions);
-      } else {
-        console.log('notification permission else', permissions);
-        NavigationServices.navigate("Permission",{Screen:"Notification"})
-      }
-    } catch (error) {
-      console.error('Failed to request permissions',error);
+  try {
+    const permissions = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+    if (!!permissions && permissions == 'granted') {
+      console.log('Permission granted', permissions);
+    } else {
+      console.log('notification permission else', permissions);
+      NavigationServices.navigate('Permission', {Screen: 'Notification'});
     }
-  } else {
-    console.error('Device is not an Android device');
+  } catch (error) {
+    console.error('Failed to request permissions', error);
   }
 };

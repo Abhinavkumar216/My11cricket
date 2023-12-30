@@ -7,13 +7,12 @@ import codePush from 'react-native-code-push';
 import {store} from './src/Services/Store';
 
 let codePushOption = {checkFrequency: codePush.CheckFrequency.MANUAL};
+
 const App = () => {
   useEffect(() => {
     codePush.sync({
-      // updateDialog:true,
-      // installMode:codePush.InstallMode.IMMEDIATE
       installMode: codePush.InstallMode.ON_NEXT_RESTART,
-      minimumBackgroundDuration: 60 * 10,
+      updateDialog: true,
     });
   }, []);
 
@@ -26,5 +25,4 @@ const App = () => {
     </Provider>
   );
 };
-
 export default codePush(codePushOption)(App);

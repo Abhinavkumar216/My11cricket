@@ -43,7 +43,7 @@ const HomeHeader = () => {
         </Text>
       </View>
       <Pressable className="mr-3" onPress={() => navigation.push('Notification')}>
-        <Icon name="notifications-outline" size={32} color={'#fff'} />
+      <Image source={require('../../../../assets/icons/bell.png')} className='w-8 h-8' />
         <Badge visible={false} size={10} className="absolute" />
       </Pressable>
       <Pressable onPress={() => navigation.push('Wallet')}>
