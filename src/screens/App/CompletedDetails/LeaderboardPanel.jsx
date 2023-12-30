@@ -24,7 +24,7 @@ const LeaderboardPanel = ({navigation}) => {
     return (
       <View className="bg-white flex-1 mt-10 rounded-2xl">
         <Header type={type} />
-        <TopCard data={data} />
+        <TopCard data={[...data]} />
         <FlatList
           data={data.slice(3)}
           ItemSeparatorComponent={<Saperator />}
@@ -58,7 +58,7 @@ const Header = ({type}) => {
 const TopPoints = ({data}) => {
   return (
     <View className="items-center mt-3">
-      <Text className="font-WorksansMedium">{data?.userUid}</Text>
+      <Text className="font-WorksansMedium">{data?.name}</Text>
       <Text className="font-semibold text-xl text-gray-900">{data?.score}</Text>
       <Text className="font-WorksansMedium text-base text-black ">
         {data?.winnings}
@@ -82,7 +82,7 @@ const TopCard = ({data}) => {
         <View>
           <View className="justify-center items-center">
             <Image
-              source={require('../../../../assets/images/profile.jpg')}
+              source={{uri: data[1].avatar}}
               className="h-20 w-20 rounded-full"
             />
             <TopRank rank={data[1]?.ranking} />
@@ -95,7 +95,7 @@ const TopCard = ({data}) => {
         <View>
           <View className="justify-center items-center">
             <Image
-              source={require('../../../../assets/images/profile.jpg')}
+              source={{uri: data[0].avatar}}
               className="h-24 w-24 rounded-full"
             />
             <TopRank rank={data[0]?.ranking} />
@@ -108,7 +108,7 @@ const TopCard = ({data}) => {
         <View>
           <View className="justify-center items-center">
             <Image
-              source={require('../../../../assets/images/profile.jpg')}
+              source={{uri: data[2].avatar}}
               className="h-20 w-20 rounded-full"
             />
             <TopRank rank={data[2]?.ranking} />
@@ -130,12 +130,12 @@ const RemainingCard = ({item}) => {
       </View>
       <View className="flex-1 ml-3 flex-row">
         <Image
-          source={require('../../../../assets/images/profile.jpg')}
+          source={{uri: item.avatar}}
           className="w-12 h-12 rounded-full mr-3"
         />
         <View>
           <Text className="font-WorksansSemiBold text-xl text-neutral-700">
-            You
+            {item.name}
           </Text>
           <Text className="font-WorksansRegular">{item.winnings}</Text>
         </View>
