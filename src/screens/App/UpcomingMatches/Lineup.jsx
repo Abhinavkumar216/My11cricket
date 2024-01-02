@@ -69,6 +69,18 @@ const PlayerCard = ({item}) => {
       return name;
     }
   };
+
+  const FantasyScore = fantasyScore => {
+    if (fantasyScore !== undefined) {
+      return (
+        <View className="rounded-sm">
+          <Text className=" text-center font-WorksansMedium text-xs text-white py-1 px-2 ">
+            {Number(fantasyScore)} PTS
+          </Text>
+        </View>
+      );
+    }
+  };
   return (
     <View className="m-3 items-center overflow-visible">
       {item.isCaptain && (
@@ -94,13 +106,7 @@ const PlayerCard = ({item}) => {
         className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm ">
         {ShortName(item.name)}
       </Text>
-      {item?.fantasyScore  ? (
-        <View className='bg-[#181928] rounded-sm'>
-          <Text className=" text-center font-WorksansMedium text-xs text-white py-1 px-2 ">
-            {Number(item.fantasyScore)} 
-          </Text>
-        </View>
-      ) : null}
+      {FantasyScore(item.fantasyScore)}
     </View>
   );
 };

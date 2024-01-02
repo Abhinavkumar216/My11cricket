@@ -143,7 +143,7 @@ const RemainingCard = ({item}) => {
   const user = useSelector(userstate);
 
   return (
-    <View className={`flex-1 flex-row items-center mx-2 py-4 px-4 rounded-lg ${item.userUid !== user.uid ? 'bg-white': 'bg-amber-50'}`}>
+    <View className={`flex-1 flex-row items-center mx-2 py-2 px-4 rounded-lg ${item.userUid !== user.uid ? 'bg-white': 'bg-amber-50'}`}>
       <Image
         source={{uri: item.avatar}}
         className="w-12 h-12 rounded-full mr-3"
