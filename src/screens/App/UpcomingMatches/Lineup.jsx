@@ -1,12 +1,6 @@
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import React from 'react';
-import {
-  FlatList,
-  Image,
-  ImageBackground,
-  Text,
-  View
-} from 'react-native';
+import {FlatList, Image, ImageBackground, Text, View} from 'react-native';
 // import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Lineup = () => {
@@ -29,7 +23,9 @@ const Lineup = () => {
         />
       </View>
       <View className="justify-center items-center">
-        <Text className="font-WorksansMedium text-xs text-white mb-3">BATTERS</Text>
+        <Text className="font-WorksansMedium text-xs text-white mb-3">
+          BATTERS
+        </Text>
         <FlatList
           horizontal
           data={data.filter(team => team?.role === 'Batsman')}
@@ -48,7 +44,9 @@ const Lineup = () => {
         />
       </View>
       <View className="justify-center items-center">
-        <Text className="font-WorksansMedium text-xs text-white mb-3">BOWLERS</Text>
+        <Text className="font-WorksansMedium text-xs text-white mb-3">
+          BOWLERS
+        </Text>
 
         <FlatList
           horizontal
@@ -63,17 +61,14 @@ const Lineup = () => {
 export default Lineup;
 
 const PlayerCard = ({item}) => {
-
   const ShortName = name => {
     if (name.length >= 12) {
       const nameSlice = name.split(' ');
-      // console.log(name, '<<>>', nameSlice[0].charAt(0).concat(' ', nameSlice[1]));
       return nameSlice[0].charAt(0).concat(' ', nameSlice[1]);
     } else {
       return name;
     }
   };
-
   return (
     <View className="m-3 items-center overflow-visible">
       {item.isCaptain && (
@@ -99,9 +94,13 @@ const PlayerCard = ({item}) => {
         className="bg-white font-WorksansMedium text-xs text-black p-1 rounded-sm ">
         {ShortName(item.name)}
       </Text>
-      {/* <Text className="bg-[#181928] text-center font-WorksansMedium text-xs text-white p-1 rounded-sm">
-        {item.role}
-      </Text> */}
+      {item?.fantasyScore  ? (
+        <View className='bg-[#181928] rounded-sm'>
+          <Text className=" text-center font-WorksansMedium text-xs text-white py-1 px-2 ">
+            {Number(item.fantasyScore)} 
+          </Text>
+        </View>
+      ) : null}
     </View>
   );
 };

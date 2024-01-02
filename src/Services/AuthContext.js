@@ -4,6 +4,7 @@ import {MMKV} from 'react-native-mmkv';
 import {BASE_URL} from '../../CONSTANTS';
 import uuid from 'react-native-uuid';
 import {isValidMobile, showToast} from './Functions/AuthFunction';
+import messaging from '@react-native-firebase/messaging';
 
 export const AuthContext = createContext();
 
@@ -40,7 +41,7 @@ export const AuthProvider = ({children}) => {
         `${BASE_URL}auth/user/new/otp`,
         {
           mobile: Number(mobile),
-          deviceId: 'MyDeviceId',
+          deviceId: uuid.v4(),
         },
         {
           headers,
@@ -71,6 +72,7 @@ export const AuthProvider = ({children}) => {
   };
 
   const signupVerify = async (mobile, otp, name) => {
+    const token = await messaging().getToken();
     setIsLoading(true);
     try {
       if (!mobile || !otp || !name) {
@@ -88,7 +90,7 @@ export const AuthProvider = ({children}) => {
           mobile: Number(mobile),
           name: name,
           otp: Number(otp),
-          notificationToken: 'process.env.NOTIFICATION_TOKEN1',
+          notificationToken: token,
           deviceId: uuid.v4(),
         },
         {

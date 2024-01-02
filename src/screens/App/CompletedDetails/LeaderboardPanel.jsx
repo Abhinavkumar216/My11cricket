@@ -5,6 +5,8 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {useMatchLeaderboardQuery} from '../../../Services/API/HomeAPI';
 import Loading from '../../../components/Loading';
 import ErrorState from '../../../components/ErrorState';
+import { useSelector } from 'react-redux';
+import { userstate } from '../../../Services/State/userSlice';
 
 const LeaderboardPanel = ({navigation}) => {
   const {
@@ -24,9 +26,26 @@ const LeaderboardPanel = ({navigation}) => {
     return (
       <View className="bg-white flex-1 mt-10 rounded-2xl">
         <Header type={type} />
-        <TopCard data={[...data]} />
+        {/* <TopCard data={[...data]} /> */}
+
+        <View className="flex-row items-center py-2 bg-white">
+          <View className="flex-1 justify-between items-center">
+            <Text className="font-WorksansMedium text-sm text-neutral-700">
+              User
+            </Text>
+          </View>
+          <View className="flex-row items-center flex-1 justify-between ml-10 pr-3">
+            <Text className="font-WorksansMedium text-base text-gray-900">
+              Score
+            </Text>
+            <Text className="font-WorksansMedium text-base text-green-600">
+              Winnings
+            </Text>
+          </View>
+        </View>
+
         <FlatList
-          data={data.slice(3)}
+          data={data}
           ItemSeparatorComponent={<Saperator />}
           renderItem={({item}) => <RemainingCard item={item} />}
         />
@@ -121,28 +140,28 @@ const TopCard = ({data}) => {
 };
 
 const RemainingCard = ({item}) => {
+  const user = useSelector(userstate);
+
   return (
-    <View className="flex-row items-center justify-between mx-2 py-4 px-4  bg-white">
-      <View>
-        <Text className="font-WorksansSemiBold text-2xl text-black">
-          {item.ranking}
+    <View className={`flex-1 flex-row items-center mx-2 py-4 px-4 rounded-lg ${item.userUid !== user.uid ? 'bg-white': 'bg-amber-50'}`}>
+      <Image
+        source={{uri: item.avatar}}
+        className="w-12 h-12 rounded-full mr-3"
+      />
+      <View className="flex-1">
+        <Text className="font-WorksansMedium text-sm text-black">
+          Rank #{item.ranking}
+        </Text>
+        <Text className="font-WorksansMedium text-xs text-neutral-600">
+          {item.name}
         </Text>
       </View>
-      <View className="flex-1 ml-3 flex-row">
-        <Image
-          source={{uri: item.avatar}}
-          className="w-12 h-12 rounded-full mr-3"
-        />
-        <View>
-          <Text className="font-WorksansSemiBold text-xl text-neutral-700">
-            {item.name}
-          </Text>
-          <Text className="font-WorksansRegular">{item.winnings}</Text>
-        </View>
-      </View>
-      <View>
-        <Text className="font-WorksansMedium text-xl text-gray-900">
+      <View className="flex-row items-center flex-1 justify-between">
+        <Text className="font-WorksansMedium text-base text-gray-900">
           {item.score}
+        </Text>
+        <Text className="font-WorksansMedium text-base text-green-600">
+          {item.winnings}
         </Text>
       </View>
     </View>

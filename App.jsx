@@ -5,10 +5,15 @@ import RootNavigation from './src/Navigation/RootNavigation';
 import {AuthProvider} from './src/Services/AuthContext';
 import codePush from 'react-native-code-push';
 import {store} from './src/Services/Store';
+import { checkNotificationPermission } from './src/Services/NotificationServices';
 
 let codePushOption = {checkFrequency: codePush.CheckFrequency.MANUAL};
 
 const App = () => {
+  useEffect(() => {
+    checkNotificationPermission();
+  }, []);
+
   useEffect(() => {
     codePush.sync({
       installMode: codePush.InstallMode.ON_NEXT_RESTART,

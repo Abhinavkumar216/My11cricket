@@ -1,23 +1,24 @@
-// import notifee, {AndroidImportance, AndroidStyle} from '@notifee/react-native';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import messaging from '@react-native-firebase/messaging';
-import {PermissionsAndroid, Platform} from 'react-native';
-import Permission from '../screens/App/Home/Permission';
 import NavigationServices from './NavigationServices';
-// import NavigationServices from '../navigation/NavigationServices';
+import notifee, {AuthorizationStatus} from '@notifee/react-native';
+import messaging from '@react-native-firebase/messaging';
 
-export const GetPermission = async () => {
+export async function checkNotificationPermission() {
+  const settings = await notifee.getNotificationSettings();
+  if (settings.authorizationStatus == AuthorizationStatus.AUTHORIZED) {
+    // console.log('Notification permissions has been authorized');
+    getToken();
+  } else if (settings.authorizationStatus == AuthorizationStatus.DENIED) {
+    // console.log('Notification permissions has been denied');
+    NavigationServices.navigate('Permission', {Screen: 'Notification'});
+  }
+}
+
+export const getToken = async () => {
   try {
-    const permissions = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    );
-    if (!!permissions && permissions == 'granted') {
-      console.log('Permission granted', permissions);
-    } else {
-      console.log('notification permission else', permissions);
-      NavigationServices.navigate('Permission', {Screen: 'Notification'});
-    }
+    const token = await messaging().getToken();
+    await messaging().registerDeviceForRemoteMessages();
+    // console.log('Token:', token);
   } catch (error) {
-    console.error('Failed to request permissions', error);
+    console.error('Error getting token');
   }
 };

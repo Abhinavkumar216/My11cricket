@@ -5,7 +5,6 @@ import {Image, ImageBackground, Pressable, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CountdownTimer from '../../../components/Countdown';
 
-
 const UpcomingCard = ({item}) => {
   const navigation = useNavigation();
 
@@ -53,9 +52,11 @@ const UpcomingCard = ({item}) => {
           <Text className="font-WorksansSemiBold text-white w-2/3 text-xs">
             MEGA {item?.megaPrize}
           </Text>
-          {item?.isLineupOut && <Text className="font-WorksansSemiBold text-green-600 text-xs">
-            Lineup Out
-          </Text>}
+          {item?.isLineupOut && (
+            <Text className="font-WorksansSemiBold text-green-600 text-xs">
+              Lineup Out
+            </Text>
+          )}
         </LinearGradient>
       </Pressable>
     </LinearGradient>
