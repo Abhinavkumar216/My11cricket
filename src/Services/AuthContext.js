@@ -123,9 +123,10 @@ export const AuthProvider = ({children}) => {
       return;
     }
 
+    console.log("login hitted", mobile)
+
     try {
       setIsLoading(true);
-
       const response = await axios.post(
         `${BASE_URL}auth/user/old/otp`,
         {
@@ -135,6 +136,8 @@ export const AuthProvider = ({children}) => {
           headers,
         },
       );
+
+      console.log("login response", response)
 
       if (response?.status === 200) {
         console.log('Login done');
@@ -242,6 +245,7 @@ export const AuthProvider = ({children}) => {
 
       const AUTH_TOKEN = storage.getString('AUTH_TOKEN');
 
+      console.log("AUTH_TOKEN",AUTH_TOKEN)
       if (AUTH_TOKEN) {
         setUserToken(true);
       }
@@ -255,7 +259,7 @@ export const AuthProvider = ({children}) => {
 
   const isFirstLaunchFunc = async () => {
     const launch = storage.getString('alreadylaunchMy11Cricket');
-
+    console.log("launch",launch)
     if (launch === 'false') {
       setIsFirstLaunch(true);
       storage.set('alreadylaunchMy11Cricket', 'true');
@@ -273,7 +277,7 @@ export const AuthProvider = ({children}) => {
               '99a0d160c86894ca7cf6d8bcb5e7095269308613f317e90bdfb12e39a62h6t5b',
           },
         });
-        // console.log("Access Token setted",response.data.data )
+        console.log("Access Token setted",response.data.data )
         storage.set('ACCESS_TOKEN', response.data.data.token);
       } catch (error) {
         console.error('Error getting accessToken', error.response.data);

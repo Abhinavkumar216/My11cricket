@@ -3,23 +3,23 @@ import Toast from 'react-native-toast-message';
 import {Provider} from 'react-redux';
 import RootNavigation from './src/Navigation/RootNavigation';
 import {AuthProvider} from './src/Services/AuthContext';
-import codePush from 'react-native-code-push';
+// import codePush from 'react-native-code-push';
 import {store} from './src/Services/Store';
 import { checkNotificationPermission } from './src/Services/NotificationServices';
 
-let codePushOption = {checkFrequency: codePush.CheckFrequency.MANUAL};
+// let codePushOption = {checkFrequency: codePush.CheckFrequency.MANUAL};
 
 const App = () => {
-  useEffect(() => {
-    checkNotificationPermission();
-  }, []);
+  // useEffect(() => {
+  //   checkNotificationPermission();
+  // }, []);
 
-  useEffect(() => {
-    codePush.sync({
-      installMode: codePush.InstallMode.ON_NEXT_RESTART,
-      updateDialog: true,
-    });
-  }, []);
+  // useEffect(() => {
+  //   codePush.sync({
+  //     installMode: codePush.InstallMode.ON_NEXT_RESTART,
+  //     updateDialog: true,
+  //   });
+  // }, []);
 
   return (
     <Provider store={store}>
@@ -30,4 +30,6 @@ const App = () => {
     </Provider>
   );
 };
-export default codePush(codePushOption)(App);
+
+export default App;
+// export default codePush(codePushOption)(App);

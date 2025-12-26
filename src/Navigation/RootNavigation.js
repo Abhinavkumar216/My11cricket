@@ -1,15 +1,23 @@
-import {NavigationContainer} from '@react-navigation/native';
 import React, {useContext} from 'react';
 import {
   Provider as PaperProvider,
   MD3LightTheme,
   configureFonts,
+  MD3DarkTheme,
+  adaptNavigationTheme,
 } from 'react-native-paper';
 import {AuthContext} from '../Services/AuthContext';
 import NavigationServices from '../Services/NavigationServices';
 import AppNavigator from './AppNavigator';
 import AuthNavigator from './AuthNavigator';
 import Splash from '../screens/Splash';
+import {useColorScheme} from 'react-native';
+import {useMaterial3Theme} from '@pchmn/expo-material3-theme';
+import {
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
 
 export default function RootNavigation() {
   // const navigationRef = useNavigationContainerRef();
@@ -28,16 +36,25 @@ export default function RootNavigation() {
     return <Splash />;
   }
 
-  const theme = {
+  const {LightTheme, DarkTheme} = adaptNavigationTheme({
+    reactNavigationLight: NavigationDefaultTheme,
+    reactNavigationDark: NavigationDarkTheme,
+  });
+
+  const CombinedDefaultTheme = {
     ...MD3LightTheme,
-
-    // Specify a custom property
-    dark: false,
-
-    // Specify a custom property in nested object
+    ...LightTheme,
     colors: {
       ...MD3LightTheme.colors,
-      primary:'#181928'
+      ...LightTheme.colors,
+    },
+  };
+  const CombinedDarkTheme = {
+    ...MD3DarkTheme,
+    ...DarkTheme,
+    colors: {
+      ...MD3DarkTheme.colors,
+      ...DarkTheme.colors,
     },
   };
 
@@ -61,8 +78,11 @@ export default function RootNavigation() {
         isV3: true,
         dark: false,
         fonts: configureFonts({config: fontConfig, isV3: true}),
-      }}>
+      }}
+      // theme={CombinedDefaultTheme}
+      >
       <NavigationContainer
+        // theme={CombinedDefaultTheme}
         ref={ref => {
           NavigationServices.setTopLevelNavigator(ref), (navigationRef = ref);
         }}>
